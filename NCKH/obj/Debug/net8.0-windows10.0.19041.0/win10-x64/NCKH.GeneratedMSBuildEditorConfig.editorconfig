@@ -1,0 +1,89 @@
+is_global = true
+build_property.TargetFramework = net8.0-windows10.0.19041.0
+build_property.TargetPlatformMinVersion = 10.0.17763.0
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 9A19103F-16F7-4668-BE54-9A1E7A4F7556
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = NCKH
+build_property.ProjectDir = D:\CNTH\ss8\.NET - Tan\NCKH\NCKH\NCKH\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.CsWinRTAotOptimizerEnabled = true
+build_property.CsWinRTAotExportsEnabled = 
+build_property.CsWinRTRcwFactoryFallbackGeneratorForceOptIn = 
+build_property.CsWinRTRcwFactoryFallbackGeneratorForceOptOut = 
+build_property.CsWinRTCcwLookupTableGeneratorEnabled = true
+build_property.CsWinRTMergeReferencedActivationFactories = 
+build_property.CsWinRTAotWarningLevel = 
+build_property.CsWinRTUseWindowsUIXamlProjections = false
+build_property.EffectiveAnalysisLevelStyle = 8.0
+build_property.EnableCodeStyleSeverity = 
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/Components/RoleChipView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.Components.RoleChipView.xaml
+build_metadata.AdditionalFiles.TargetPath = Components\RoleChipView.xaml
+build_metadata.AdditionalFiles.RelativePath = Components\RoleChipView.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/Components/TrangThaiChipView.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.Components.TrangThaiChipView.xaml
+build_metadata.AdditionalFiles.TargetPath = Components\TrangThaiChipView.xaml
+build_metadata.AdditionalFiles.RelativePath = Components\TrangThaiChipView.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = MainPage.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/Views/DvqlttListPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.Views.DvqlttListPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\DvqlttListPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\DvqlttListPage.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/Views/HoSoListPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.Views.HoSoListPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\HoSoListPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\HoSoListPage.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/Views/LoginPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.Views.LoginPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\LoginPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\LoginPage.xaml
+
+[D:/CNTH/ss8/.NET - Tan/NCKH/NCKH/NCKH/Views/TaoHoSo.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = NCKH.Views.TaoHoSo.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\TaoHoSo.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\TaoHoSo.xaml

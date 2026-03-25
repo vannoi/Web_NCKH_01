@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NCKH.MainPage"
+             Shell.NavBarIsVisible="False">
+
+    <VerticalStackLayout Padding="32" Spacing="16"
+                         VerticalOptions="Center">
+
+        <Label Text="Chào mừng đến NCKH App"
+               FontSize="20" FontAttributes="Bold"
+               HorizontalOptions="Center" TextColor="#1A1A1A"/>
+
+        <Label Text="Đăng nhập thành công!"
+               FontSize="14" HorizontalOptions="Center"
+               TextColor="#888888"/>
+
+    </VerticalStackLayout>
+
+</ContentPage>

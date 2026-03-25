@@ -1,0 +1,355 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NCKH.Views.TaoHoSoPage"
+             Shell.NavBarIsVisible="False">
+
+    <OnIdiom x:TypeArguments="View">
+
+        <!-- ===== MOBILE ===== -->
+        <OnIdiom.Phone>
+            <Grid RowDefinitions="160,*" BackgroundColor="#F0F4FF">
+
+                <!-- Header gradient -->
+                <Grid Grid.Row="0">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                            <GradientStop Color="#38BDF8" Offset="0.5"/>
+                            <GradientStop Color="#818CF8" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <Ellipse WidthRequest="120" HeightRequest="120"
+                             HorizontalOptions="End" VerticalOptions="Start"
+                             Margin="0,-30,-20,0" Opacity="0.12">
+                        <Ellipse.Fill>
+                            <SolidColorBrush Color="White"/>
+                        </Ellipse.Fill>
+                    </Ellipse>
+                    <Grid ColumnDefinitions="Auto,*" Padding="20,60,20,24"
+                          ColumnSpacing="12">
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32"
+                                StrokeThickness="0" BackgroundColor="#40FFFFFF"
+                                VerticalOptions="Center">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="16"/>
+                            </Border.StrokeShape>
+                            <Label Text="←" FontSize="16" TextColor="White"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                            <Label Text="Tạo hồ sơ mới" FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                            <Label Text="Điền đầy đủ thông tin bên dưới" FontSize="12" TextColor="#BFE0FF"/>
+                        </VerticalStackLayout>
+                    </Grid>
+                </Grid>
+
+                <!-- Form -->
+                <Border Grid.Row="1" BackgroundColor="#F0F4FF" StrokeThickness="0" Margin="0,-20,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="24,24,0,0"/>
+                    </Border.StrokeShape>
+                    <ScrollView>
+                        <VerticalStackLayout Padding="20,24,20,0" Spacing="0">
+                            <Label Text="Thông tin cơ bản" FontSize="14" FontAttributes="Bold" TextColor="#1E1E2E" Margin="0,0,0,12"/>
+                            <Label Text="Tiêu đề *" FontSize="11" TextColor="#94A3B8" Margin="0,0,0,6"/>
+                            <Border Padding="14,0" HeightRequest="48" StrokeThickness="1.5" Stroke="#4F8EF7" BackgroundColor="#F0F7FF" Margin="0,0,0,14">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="TieuDeEntryMobile" Placeholder="Nhập tiêu đề hồ sơ..." PlaceholderColor="#CBD5E1" FontSize="13" TextColor="#334155" VerticalOptions="Center"/>
+                            </Border>
+                            <Label Text="Mô tả" FontSize="11" TextColor="#94A3B8" Margin="0,0,0,6"/>
+                            <Border Padding="14,10" HeightRequest="90" StrokeThickness="0.5" Stroke="#E2E8F0" BackgroundColor="White" Margin="0,0,0,14">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Editor Placeholder="Nhập mô tả hồ sơ..." PlaceholderColor="#CBD5E1" FontSize="13" TextColor="#334155"/>
+                            </Border>
+                            <Label Text="Loại công bố *" FontSize="11" TextColor="#94A3B8" Margin="0,0,0,6"/>
+                            <Border Padding="14,0" HeightRequest="48" StrokeThickness="0.5" Stroke="#E2E8F0" BackgroundColor="White" Margin="0,0,0,20">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Picker Title="Chọn loại công bố" TitleColor="#CBD5E1" FontSize="13" TextColor="#334155" VerticalOptions="Center">
+                                    <Picker.Items>
+                                        <x:String>Bài báo khoa học</x:String>
+                                        <x:String>Đề tài nghiên cứu</x:String>
+                                        <x:String>Sách/Giáo trình</x:String>
+                                        <x:String>Hội thảo khoa học</x:String>
+                                        <x:String>Bằng sáng chế</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                            </Border>
+                            <Label Text="Minh chứng đính kèm" FontSize="14" FontAttributes="Bold" TextColor="#1E1E2E" Margin="0,0,0,12"/>
+                            <Border Padding="12,10" StrokeThickness="0.5" Stroke="#E8EDF5" BackgroundColor="White" Margin="0,0,0,8">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" StrokeThickness="0" BackgroundColor="#FEF2F2">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8"/>
+                                        </Border.StrokeShape>
+                                        <Label Text="PDF" FontSize="8" FontAttributes="Bold" TextColor="#DC2626" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                                        <Label Text="BaiBao_2026.pdf" FontSize="12" FontAttributes="Bold" TextColor="#334155"/>
+                                        <Label Text="2.4 MB" FontSize="10" TextColor="#94A3B8"/>
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="×" FontSize="18" TextColor="#E24B4A" VerticalOptions="Center"/>
+                                </Grid>
+                            </Border>
+                            <Border Padding="20,16" StrokeThickness="1.5" Stroke="#B0BEC5" BackgroundColor="White" Margin="0,0,0,24">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="+ Tải lên tệp minh chứng" FontSize="13" FontAttributes="Bold" TextColor="#4F8EF7" HorizontalOptions="Center"/>
+                                    <Label Text="PDF, DOC, JPG — tối đa 10MB" FontSize="11" TextColor="#94A3B8" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </Border>
+                            <Button Text="Nộp hồ sơ" TextColor="White" FontSize="15" FontAttributes="Bold" HeightRequest="50" CornerRadius="14" Clicked="OnNopHoSoClicked" Margin="0,0,0,10">
+                                <Button.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#4F8EF7" Offset="0"/>
+                                        <GradientStop Color="#818CF8" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                            </Button>
+                            <Button Text="Lưu nháp" TextColor="#4F8EF7" FontSize="14" HeightRequest="46" CornerRadius="14" BackgroundColor="White" BorderColor="#4F8EF7" BorderWidth="1.5" Clicked="OnLuuNhapClicked" Margin="0,0,0,32"/>
+                        </VerticalStackLayout>
+                    </ScrollView>
+                </Border>
+            </Grid>
+        </OnIdiom.Phone>
+
+        <!-- ===== DESKTOP ===== -->
+        <OnIdiom.Desktop>
+            <Grid ColumnDefinitions="230,*">
+
+                <!-- SIDEBAR — giống HoSoListPage -->
+                <Grid Grid.Column="0" RowDefinitions="Auto,*,Auto">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Color="#3B6FC9" Offset="0.0"/>
+                            <GradientStop Color="#5B4FCF" Offset="0.6"/>
+                            <GradientStop Color="#6B5BE6" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+
+                    <!-- Logo -->
+                    <Border Grid.Row="0" Padding="20,22,20,18" StrokeThickness="0" BackgroundColor="Transparent">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0"/>
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                            <Border Grid.Column="0" WidthRequest="38" HeightRequest="38" StrokeThickness="0" BackgroundColor="#33FFFFFF">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Label Text="N" FontSize="18" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="NCKH App" FontSize="15" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="DNTU · Giảng viên" FontSize="11" TextColor="#80FFFFFF"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <!-- Menu — "Tạo hồ sơ mới" đang active -->
+                    <VerticalStackLayout Grid.Row="1" Padding="8,16,8,0" Spacing="2">
+                        <Label Text="MENU" FontSize="10" TextColor="#60FFFFFF" Margin="12,0,0,8"/>
+                        <Border Padding="12,10" StrokeThickness="0" BackgroundColor="#30FFFFFF">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Label Text="Quản lý hồ sơ" FontSize="13" FontAttributes="Bold" TextColor="White"/>
+                        </Border>
+                        <Label Text="Danh sách hồ sơ" FontSize="12" TextColor="#80FFFFFF" Margin="36,4,0,0"/>
+
+                        <!-- Tạo hồ sơ mới đang active -->
+                        <Label Text="Tạo hồ sơ mới" FontSize="12" FontAttributes="Bold"
+                               TextColor="White" Margin="36,4,0,0"/>
+
+                        <BoxView HeightRequest="0.5" BackgroundColor="#20FFFFFF" Margin="12,12"/>
+                        <Border Padding="12,10" StrokeThickness="0" BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Label Text="Giờ NCKH" FontSize="13" TextColor="#80FFFFFF"/>
+                        </Border>
+                        <Border Padding="12,10" StrokeThickness="0" BackgroundColor="Transparent">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="8"/>
+                            </Border.StrokeShape>
+                            <Label Text="Thông báo" FontSize="13" TextColor="#80FFFFFF"/>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- User -->
+                    <Border Grid.Row="2" Padding="16" StrokeThickness="0" BackgroundColor="Transparent">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="0"/>
+                        </Border.StrokeShape>
+                        <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                            <Border Grid.Column="0" WidthRequest="34" HeightRequest="34" StrokeThickness="0" BackgroundColor="#40FFFFFF">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="17"/>
+                                </Border.StrokeShape>
+                                <Label Text="NA" FontSize="12" FontAttributes="Bold" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                <Label Text="Nguyễn Văn A" FontSize="13" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="Giảng viên" FontSize="11" TextColor="#80FFFFFF"/>
+                            </VerticalStackLayout>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <!-- NỘI DUNG CHÍNH -->
+                <Grid Grid.Column="1" RowDefinitions="Auto,*" BackgroundColor="#F0F4FF">
+
+                    <!-- Topbar gradient -->
+                    <Grid Grid.Row="0" Padding="24,16" ColumnDefinitions="Auto,*">
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                                <GradientStop Color="#38BDF8" Offset="0.5"/>
+                                <GradientStop Color="#818CF8" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+
+                        <!-- Nút back -->
+                        <Border Grid.Column="0" WidthRequest="32" HeightRequest="32"
+                                StrokeThickness="0" BackgroundColor="#40FFFFFF"
+                                VerticalOptions="Center" Margin="0,0,16,0">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="16"/>
+                            </Border.StrokeShape>
+                            <Label Text="←" FontSize="16" TextColor="White"
+                                   HorizontalOptions="Center" VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Tiêu đề -->
+                        <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                            <Label Text="Tạo hồ sơ mới" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                            <Label Text="Điền đầy đủ thông tin bên dưới" FontSize="13" TextColor="#BFE0FF"/>
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <!-- Form cuộn -->
+                    <ScrollView Grid.Row="1" Padding="0,20,0,0">
+                        <VerticalStackLayout HorizontalOptions="Center" WidthRequest="600"
+                                             Padding="0,0,0,32" Spacing="0">
+
+                            <!-- Thông tin cơ bản -->
+                            <Label Text="Thông tin cơ bản" FontSize="14" FontAttributes="Bold" TextColor="#1E1E2E" Margin="0,0,0,12"/>
+
+                            <Label Text="Tiêu đề *" FontSize="11" TextColor="#94A3B8" Margin="0,0,0,6"/>
+                            <Border Padding="14,0" HeightRequest="48" StrokeThickness="1.5" Stroke="#4F8EF7" BackgroundColor="#F0F7FF" Margin="0,0,0,14">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="TieuDeEntry" Placeholder="Nhập tiêu đề hồ sơ..." PlaceholderColor="#CBD5E1" FontSize="13" TextColor="#334155" VerticalOptions="Center"/>
+                            </Border>
+
+                            <Label Text="Mô tả" FontSize="11" TextColor="#94A3B8" Margin="0,0,0,6"/>
+                            <Border Padding="14,10" HeightRequest="90" StrokeThickness="0.5" Stroke="#E2E8F0" BackgroundColor="White" Margin="0,0,0,14">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <Editor x:Name="MoTaEditor" Placeholder="Nhập mô tả hồ sơ..." PlaceholderColor="#CBD5E1" FontSize="13" TextColor="#334155"/>
+                            </Border>
+
+                            <Label Text="Loại công bố *" FontSize="11" TextColor="#94A3B8" Margin="0,0,0,6"/>
+                            <Border Padding="10,6" HeightRequest="95" StrokeThickness="0.5" Stroke="#E2E8F0" BackgroundColor="White" Margin="0,0,0,10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="5"/>
+                                </Border.StrokeShape>
+                                <Picker x:Name="LoaiCongBoPicker" Title="Chọn loại công bố" TitleColor="#CBD5E1" FontSize="12" TextColor="#334155" VerticalOptions="Center">
+                                    <Picker.Items>
+                                        <x:String>Bài báo khoa học</x:String>
+                                        <x:String>Đề tài nghiên cứu</x:String>
+                                        <x:String>Sách/Giáo trình</x:String>
+                                        <x:String>Hội thảo khoa học</x:String>
+                                        <x:String>Bằng sáng chế</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                            </Border>
+
+                            <!-- Minh chứng -->
+                            <Label Text="Minh chứng đính kèm" FontSize="14" FontAttributes="Bold" TextColor="#1E1E2E" Margin="0,0,0,12"/>
+
+                            <Border Padding="12,10" StrokeThickness="0.5" Stroke="#E8EDF5" BackgroundColor="White" Margin="0,0,0,8">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" StrokeThickness="0" BackgroundColor="#FEF2F2">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8"/>
+                                        </Border.StrokeShape>
+                                        <Label Text="PDF" FontSize="8" FontAttributes="Bold" TextColor="#DC2626" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                                        <Label Text="BaiBao_2026.pdf" FontSize="12" FontAttributes="Bold" TextColor="#334155"/>
+                                        <Label Text="2.4 MB" FontSize="10" TextColor="#94A3B8"/>
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="×" FontSize="18" TextColor="#E24B4A" VerticalOptions="Center"/>
+                                </Grid>
+                            </Border>
+
+                            <Border Padding="12,10" StrokeThickness="0.5" Stroke="#E8EDF5" BackgroundColor="White" Margin="0,0,0,10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10"/>
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                    <Border Grid.Column="0" WidthRequest="32" HeightRequest="32" StrokeThickness="0" BackgroundColor="#FEF2F2">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8"/>
+                                        </Border.StrokeShape>
+                                        <Label Text="PDF" FontSize="8" FontAttributes="Bold" TextColor="#DC2626" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    </Border>
+                                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="1">
+                                        <Label Text="MinhChung.pdf" FontSize="12" FontAttributes="Bold" TextColor="#334155"/>
+                                        <Label Text="1.1 MB" FontSize="10" TextColor="#94A3B8"/>
+                                    </VerticalStackLayout>
+                                    <Label Grid.Column="2" Text="×" FontSize="18" TextColor="#E24B4A" VerticalOptions="Center"/>
+                                </Grid>
+                            </Border>
+
+                            <!-- Upload area -->
+                            <Border Padding="20,16" StrokeThickness="1.5" Stroke="#B0BEC5" BackgroundColor="White" Margin="0,0,0,24">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="12"/>
+                                </Border.StrokeShape>
+                                <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                    <Label Text="+ Tải lên tệp minh chứng" FontSize="13" FontAttributes="Bold" TextColor="#4F8EF7" HorizontalOptions="Center"/>
+                                    <Label Text="PDF, DOC, JPG — tối đa 10MB" FontSize="11" TextColor="#94A3B8" HorizontalOptions="Center"/>
+                                </VerticalStackLayout>
+                            </Border>
+
+                            <!-- Nút Nộp hồ sơ -->
+                            <Button Text="Nộp hồ sơ" TextColor="White" FontSize="15" FontAttributes="Bold" HeightRequest="50" CornerRadius="14" Clicked="OnNopHoSoClicked" Margin="0,0,0,10">
+                                <Button.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#4F8EF7" Offset="0"/>
+                                        <GradientStop Color="#818CF8" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Button.Background>
+                            </Button>
+
+                            <!-- Nút Lưu nháp -->
+                            <Button Text="Lưu nháp" TextColor="#4F8EF7" FontSize="14" HeightRequest="46" CornerRadius="14" BackgroundColor="White" BorderColor="#4F8EF7" BorderWidth="1.5" Clicked="OnLuuNhapClicked"/>
+
+                        </VerticalStackLayout>
+                    </ScrollView>
+
+                </Grid>
+            </Grid>
+        </OnIdiom.Desktop>
+
+    </OnIdiom>
+
+</ContentPage>

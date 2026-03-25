@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="NCKH.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:NCKH"
+    xmlns:views="clr-namespace:NCKH.Views"
+    Shell.FlyoutBehavior="Disabled"
+    Title="NCKH">
+
+    <ShellContent
+        Title="Login"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage"/>
+
+    <ShellContent
+        Title="Hồ Sơ"
+        ContentTemplate="{DataTemplate views:HoSoListPage}"
+        Route="HoSoListPage"/>
+
+
+    <ShellContent
+        Title="Đơn vị Quản lý Trực tiếp"
+        ContentTemplate="{DataTemplate views:DvqlttListPage}"
+        Route="DvqlttListPage" />
+
+    <ShellContent
+        Title="Tạo hồ sơ"
+        ContentTemplate="{DataTemplate views:TaoHoSoPage}"
+        Route="TaoHoSoPage"/>
+
+</Shell>
