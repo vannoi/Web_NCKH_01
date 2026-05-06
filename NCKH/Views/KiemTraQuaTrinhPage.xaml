@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:NCKH.Components"
+             xmlns:models="clr-namespace:NCKH.Models"
+             x:Class="NCKH.Views.KiemTraQuaTrinhPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F0F4FF">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Phone=0, Desktop=240}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <components:SidebarView Grid.Column="0"
+                                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                                ActivePage="KiemTra"
+                                ZIndex="999"
+                                x:Name="SidebarControl"
+                                TranslationX="{OnIdiom Phone=-300, Desktop=0}"
+                                WidthRequest="{OnIdiom Phone=280, Desktop=-1}"
+                                HorizontalOptions="{OnIdiom Phone=Start, Desktop=Fill}" />
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,*" Margin="0">
+
+            <!-- HEADER -->
+            <Grid Grid.Row="0" HeightRequest="{OnIdiom Phone=65, Desktop=80}">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                        <GradientStop Color="#818CF8" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <Grid Padding="{OnIdiom Phone='60,0,15,0', Desktop='24,0'}">
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="Kiểm tra quy trình đơn"
+                               FontSize="{OnIdiom Phone=18, Desktop=20}"
+                               FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Theo dõi trạng thái các đơn nộp"
+                               FontSize="12" TextColor="#BFE0FF"/>
+                    </VerticalStackLayout>
+                </Grid>
+                <HorizontalStackLayout IsVisible="{OnIdiom Phone=True, Desktop=False}"
+                                       VerticalOptions="Center" Margin="15,0">
+                    <ImageButton Source="menu_icon.png" Clicked="OnMenuClicked"
+                                 WidthRequest="30" HeightRequest="30"
+                                 BackgroundColor="Transparent"/>
+                </HorizontalStackLayout>
+            </Grid>
+
+            <!-- DANH SÁCH TỪ API -->
+            <CollectionView x:Name="TienTrinhCollectionView" Grid.Row="1"
+                            Margin="{OnIdiom Phone=15, Desktop=24}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout Orientation="Vertical" ItemSpacing="16"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:HoSo">
+                        <Border Padding="16" StrokeThickness="0.5" Stroke="#E8EDF5" BackgroundColor="White">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="12"/>
+                            </Border.StrokeShape>
+                            <VerticalStackLayout Spacing="12">
+
+                                <!-- HEADER ITEM: Tiêu đề + Badge + Progress -->
+                                <VerticalStackLayout Spacing="8">
+                                    <VerticalStackLayout.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnExpandTapped"
+                                                              CommandParameter="{Binding .}"/>
+                                    </VerticalStackLayout.GestureRecognizers>
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <VerticalStackLayout Grid.Column="0">
+                                            <Label Text="{Binding TieuDe}"
+                                                   FontSize="14" FontAttributes="Bold" TextColor="#334155"
+                                                   LineBreakMode="TailTruncation"/>
+                                            <Label Text="{Binding NgayNop, StringFormat='Ngày nộp: {0:dd/MM/yyyy}'}"
+                                                   FontSize="11" TextColor="#94A3B8"/>
+                                        </VerticalStackLayout>
+                                        <Border Grid.Column="1" Padding="8,4"
+                                                BackgroundColor="{Binding BadgeBg}">
+                                            <Border.StrokeShape>
+                                                <RoundRectangle CornerRadius="6"/>
+                                            </Border.StrokeShape>
+                                            <Label Text="{Binding TrangThaiVaPhanTram}"
+                                                   FontSize="11" FontAttributes="Bold"
+                                                   TextColor="{Binding BadgeTextColor}"/>
+                                        </Border>
+                                    </Grid>
+                                    <ProgressBar Progress="{Binding ProgressValue}"
+                                                 ProgressColor="{Binding ProgressBarColor}"
+                                                 HeightRequest="6"/>
+                                </VerticalStackLayout>
+
+                                <!-- DETAIL 4 BƯỚC (Expand/Collapse) -->
+                                <Grid IsVisible="{Binding IsExpanded}"
+                                      ColumnDefinitions="*,*,*,*" ColumnSpacing="8">
+
+                                    <!-- Bước 1: Nháp -->
+                                    <Border Grid.Column="0" Padding="8,12"
+                                            BackgroundColor="{Binding Step0Bg}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8"/>
+                                        </Border.StrokeShape>
+                                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                            <Label Text="① Nháp" FontSize="11"
+                                                   TextColor="{Binding Step0Text}"
+                                                   HorizontalOptions="Center"/>
+                                            <!-- Đã xong -->
+                                            <Label Text="✓" FontSize="16" FontAttributes="Bold"
+                                                   TextColor="{Binding Step0Text}"
+                                                   HorizontalOptions="Center"
+                                                   IsVisible="{Binding Step0Done}"/>
+                                            <!-- Đang ở bước này -->
+                                            <Ellipse WidthRequest="12" HeightRequest="12"
+                                                     Fill="{Binding Step0Text}"
+                                                     HorizontalOptions="Center"
+                                                     IsVisible="{Binding Step0Done}"/>
+                                        </VerticalStackLayout>
+                                    </Border>
+
+                                    <!-- Bước 2: Đang xét -->
+                                    <Border Grid.Column="1" Padding="8,12"
+                                            BackgroundColor="{Binding Step1Bg}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8"/>
+                                        </Border.StrokeShape>
+                                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                            <Label Text="② Đang xét" FontSize="11"
+                                                   TextColor="{Binding Step1Text}"
+                                                   HorizontalOptions="Center"/>
+                                            <Label Text="✓" FontSize="16" FontAttributes="Bold"
+                                                   TextColor="{Binding Step1Text}"
+                                                   HorizontalOptions="Center"
+                                                   IsVisible="{Binding Step1Done}"/>
+                                            <Ellipse WidthRequest="12" HeightRequest="12"
+                                                     Fill="{Binding Step1Text}"
+                                                     HorizontalOptions="Center"
+                                                     IsVisible="{Binding Step1Current}"/>
+                                            <Ellipse WidthRequest="12" HeightRequest="12"
+                                                     Stroke="#CBD5E1" Fill="Transparent"
+                                                     HorizontalOptions="Center"
+                                                     IsVisible="{Binding Step1Done}"/>
+                                        </VerticalStackLayout>
+                                    </Border>
+
+                                    <!-- Bước 3: Phòng Đào Tạo -->
+                                    <Border Grid.Column="2" Padding="8,12"
+                                            BackgroundColor="{Binding Step2Bg}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8"/>
+                                        </Border.StrokeShape>
+                                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                            <Label Text="③ Duyệt" FontSize="11"
+                                                   TextColor="{Binding Step2Text}"
+                                                   HorizontalOptions="Center"/>
+                                            <Label Text="✓" FontSize="16" FontAttributes="Bold"
+                                                   TextColor="{Binding Step2Text}"
+                                                   HorizontalOptions="Center"
+                                                   IsVisible="{Binding Step2Done}"/>
+                                            <Ellipse WidthRequest="12" HeightRequest="12"
+                                                     Fill="{Binding Step2Text}"
+                                                     HorizontalOptions="Center"
+                                                     IsVisible="{Binding Step2Current}"/>
+                                            <Ellipse WidthRequest="12" HeightRequest="12"
+                                                     Stroke="#CBD5E1" Fill="Transparent"
+                                                     HorizontalOptions="Center"
+                                                     IsVisible="{Binding Step2Done}"/>
+                                        </VerticalStackLayout>
+                                    </Border>
+
+                                    <!-- Bước 4: Hoàn tất -->
+                                    <Border Grid.Column="3" Padding="8,12"
+                                            BackgroundColor="{Binding Step3Bg}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="8"/>
+                                        </Border.StrokeShape>
+                                        <VerticalStackLayout HorizontalOptions="Center" Spacing="4">
+                                            <Label Text="④ Hoàn tất" FontSize="11"
+                                                   TextColor="{Binding Step3Text}"
+                                                   HorizontalOptions="Center"/>
+                                            <Label Text="✓" FontSize="16" FontAttributes="Bold"
+                                                   TextColor="{Binding Step3Text}"
+                                                   HorizontalOptions="Center"
+                                                   IsVisible="{Binding Step3Done}"/>
+                                            <Ellipse WidthRequest="12" HeightRequest="12"
+                                                     Stroke="#CBD5E1" Fill="Transparent"
+                                                     HorizontalOptions="Center"
+                                                     IsVisible="{Binding Step3Done}"/>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </Grid>
+
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+    </Grid>
+</ContentPage>

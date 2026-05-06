@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NCKH.Views.SuaHoSoPopup"
+             BackgroundColor="#80000000">
+
+    <Grid Padding="{OnIdiom Phone='15', Desktop='0'}">
+
+        <Border VerticalOptions="Center" 
+                HorizontalOptions="{OnIdiom Phone='Fill', Desktop='Center'}" 
+                WidthRequest="{OnIdiom Phone='-1', Desktop='450'}" 
+                BackgroundColor="White" 
+                StrokeThickness="0">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="{OnIdiom Phone='12', Desktop='16'}"/>
+            </Border.StrokeShape>
+
+            <VerticalStackLayout>
+
+                <Border BackgroundColor="#4F8EF7" Padding="20,15" StrokeThickness="0">
+                    <Label Text="CHỈNH SỬA HỒ SƠ" TextColor="White" FontAttributes="Bold" FontSize="16"/>
+                </Border>
+
+                <ScrollView MaximumHeightRequest="600">
+                    <VerticalStackLayout Padding="{OnIdiom Phone='15,20', Desktop='25'}" Spacing="15">
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Tiêu đề hồ sơ" FontSize="13" TextColor="#64748B"/>
+                            <Border Stroke="#E2E8F0" StrokeThickness="1" Padding="10,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="EditTieuDe" Placeholder="Nhập tiêu đề..." HeightRequest="45" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Mô tả nội dung" FontSize="13" TextColor="#64748B"/>
+                            <Border Stroke="#E2E8F0" StrokeThickness="1" Padding="10">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Editor x:Name="EditMoTa" Placeholder="Nhập mô tả..." HeightRequest="90" BackgroundColor="Transparent"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="5">
+                            <Label Text="Tệp đính kèm (PDF)" FontSize="13" TextColor="#64748B"/>
+
+                            <Border Stroke="#E2E8F0" StrokeThickness="1" StrokeDashArray="4,4" BackgroundColor="#F8FAFC">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnChonFileTapped"/>
+                                </Border.GestureRecognizers>
+                                <HorizontalStackLayout HorizontalOptions="Center" Padding="15">
+                                    <Label Text="📄" FontSize="16" Margin="0,0,8,0" VerticalOptions="Center"/>
+                                    <Label Text="Nhấn để tải lên tệp PDF mới" TextColor="#4F8EF7" FontSize="14" VerticalOptions="Center"/>
+                                </HorizontalStackLayout>
+                            </Border>
+
+                            <Border x:Name="SelectedFileLayout" IsVisible="False" BackgroundColor="#EEF2FF" Stroke="#C7D2FE" StrokeThickness="1" Padding="10,5" Margin="0,5,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="6"/>
+                                </Border.StrokeShape>
+                                <Grid ColumnDefinitions="Auto, *, Auto" VerticalOptions="Center">
+                                    <Label Grid.Column="0" Text="📎" VerticalOptions="Center" Margin="0,0,8,0"/>
+                                    <Label Grid.Column="1" x:Name="FileNameLabel" Text="filename.pdf" VerticalOptions="Center" TextColor="#3730A3" LineBreakMode="TailTruncation"/>
+                                    <Button Grid.Column="2" Text="✕" TextColor="#E11D48" BackgroundColor="Transparent" Clicked="OnXoaFileClicked" WidthRequest="35" HeightRequest="35" Padding="0"/>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <HorizontalStackLayout Spacing="10" HorizontalOptions="End" Margin="0,15,0,0">
+                            <Button Text="Hủy" Clicked="OnHuySuaClicked" BackgroundColor="#F1F5F9" TextColor="#64748B" WidthRequest="100" HeightRequest="40" CornerRadius="8"/>
+                            <Button Text="Lưu thay đổi" Clicked="OnLuuSuaClicked" BackgroundColor="#4F8EF7" TextColor="White" WidthRequest="130" HeightRequest="40" CornerRadius="8"/>
+                        </HorizontalStackLayout>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

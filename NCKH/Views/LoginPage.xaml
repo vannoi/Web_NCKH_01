@@ -2,199 +2,134 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NCKH.Views.LoginPage"
-             Shell.NavBarIsVisible="False"
-             BackgroundColor="#F0F4FF">
+             Shell.NavBarIsVisible="False">
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#E8F0FE" Offset="0.0"/>
+                <GradientStop Color="#EEF2FF" Offset="0.5"/>
+                <GradientStop Color="#F0EBFF" Offset="1.0"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <ScrollView>
+            <VerticalStackLayout Padding="16,25" VerticalOptions="Center">
+                <Border StrokeThickness="0" BackgroundColor="Transparent">
+                    <Border.WidthRequest>
+                        <OnIdiom x:TypeArguments="x:Double" Phone="-1" Desktop="540"/>
+                    </Border.WidthRequest>
+                    <Border.HorizontalOptions>
+                        <OnIdiom x:TypeArguments="LayoutOptions" Phone="Fill" Desktop="Center"/>
+                    </Border.HorizontalOptions>
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="28"/>
+                    </Border.StrokeShape>
+                    <Border.Shadow>
+                        <Shadow Brush="#6366F1" Offset="0,10" Radius="30" Opacity="0.15"/>
+                    </Border.Shadow>
+                    <Grid RowDefinitions="Auto,*">
 
-    <ScrollView>
-        <VerticalStackLayout Padding="20" VerticalOptions="Center">
+                        <!-- PHẦN HEADER GRADIENT -->
+                        <Grid Grid.Row="0" HeightRequest="260">
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                    <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                                    <GradientStop Color="#38BDF8" Offset="0.5"/>
+                                    <GradientStop Color="#818CF8" Offset="1.0"/>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <Ellipse WidthRequest="120" HeightRequest="120"
+                                     HorizontalOptions="End" VerticalOptions="Start"
+                                     Margin="0,-30,-20,0" Opacity="0.1" Fill="White"/>
+                            <VerticalStackLayout Padding="24" Spacing="0" VerticalOptions="Center">
+                                <Label Text="QUẢN LÝ NCKH" FontSize="20" FontAttributes="Bold" TextColor="White"/>
+                                <Label Text="Trường ĐH Công nghệ Đồng Nai"
+                                       FontSize="14" TextColor="#D1E9FF" Margin="0,2,0,18"/>
+                                <Image Source="logo.png"
+                                       WidthRequest="75" HeightRequest="75"
+                                       HorizontalOptions="Start" Margin="0,0,0,15"/>
+                                <BoxView HeightRequest="3" WidthRequest="40" BackgroundColor="#60A5FA"
+                                         HorizontalOptions="Start" CornerRadius="1.5"/>
+                            </VerticalStackLayout>
+                        </Grid>
 
-            <!-- KHUNG NGOÀI bo góc 4 cạnh -->
-            <Border StrokeThickness="0" BackgroundColor="Transparent" WidthRequest="790" HorizontalOptions="Center">
-                <Border.StrokeShape>
-                    <RoundRectangle CornerRadius="32"/>
-                </Border.StrokeShape>
+                        <!-- PHẦN FORM ĐĂNG NHẬP -->
+                        <Border Grid.Row="1" BackgroundColor="White" StrokeThickness="0" Padding="24,32">
+                            <VerticalStackLayout Spacing="0">
+                                <Label Text="Chào mừng quay lại!" FontSize="24" FontAttributes="Bold"
+                                       TextColor="#1E293B" Margin="0,0,0,6"/>
+                                <Label Text="Vui lòng đăng nhập để tiếp tục"
+                                       FontSize="13" TextColor="#64748B" Margin="0,0,0,28"/>
 
-                <Grid RowDefinitions="290,*">
-
-                    <!-- PHẦN TRÊN: Hero gradient -->
-                    <Grid Grid.Row="0">
-                        <Grid.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                <GradientStop Color="#4F8EF7" Offset="0.0"/>
-                                <GradientStop Color="#38BDF8" Offset="0.5"/>
-                                <GradientStop Color="#818CF8" Offset="1.0"/>
-                            </LinearGradientBrush>
-                        </Grid.Background>
-
-                        <Ellipse WidthRequest="140" HeightRequest="140"
-                                 HorizontalOptions="End" VerticalOptions="Start"
-                                 Margin="0,-40,-30,0" Opacity="0.12">
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="White"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-
-                        <Ellipse WidthRequest="90" HeightRequest="90"
-                                 HorizontalOptions="Start" VerticalOptions="End"
-                                 Margin="0,0,0,0" Opacity="0.2">
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="#818CF8"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-
-                        <VerticalStackLayout Padding="24,32,24,0" Spacing="0">
-                            <Label Text="QUẢN LÝ NCKH" FontSize="16" FontAttributes="Bold"
-                                   TextColor="White"/>
-                            <Label Text="Trường ĐH Công nghệ Đồng Nai"
-                                   FontSize="13" TextColor="#BFE0FF" Margin="0,2,0,12"/>
-
-                            <Image Source="logo.png"
-                                   WidthRequest="90" HeightRequest="90"
-                                   HorizontalOptions="Start"
-                                   Margin="0,0,0,16"/>
-
-                            <HorizontalStackLayout Spacing="12"
-                                                   HorizontalOptions="Center"
-                                                   VerticalOptions="End">
-
-                                <Border WidthRequest="46" HeightRequest="58"
-                                        StrokeThickness="0" BackgroundColor="#DBEAFE">
+                                <!-- EMAIL -->
+                                <Label Text="Tài khoản / Email" FontSize="12" FontAttributes="Bold"
+                                       TextColor="#475569" Margin="4,0,0,8"/>
+                                <Border Padding="12,0" HeightRequest="54" StrokeThickness="1"
+                                        Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Margin="0,0,0,18">
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="3"/>
+                                        <RoundRectangle CornerRadius="12"/>
                                     </Border.StrokeShape>
-                                    <Grid>
-                                        <BoxView WidthRequest="12" BackgroundColor="#4F8EF7"
-                                                 HorizontalOptions="Start"/>
-                                        <VerticalStackLayout Margin="10,8,6,0" Spacing="4">
-                                            <BoxView HeightRequest="8" BackgroundColor="#93C5FD" CornerRadius="7"/>
-                                            <BoxView HeightRequest="8" BackgroundColor="#BFDBFE" CornerRadius="7" WidthRequest="16" HorizontalOptions="Start"/>
-                                            <BoxView HeightRequest="8" BackgroundColor="#93C5FD" CornerRadius="7"/>
-                                            <BoxView HeightRequest="8" BackgroundColor="#BFDBFE" CornerRadius="7" WidthRequest="20" HorizontalOptions="Start"/>
-                                        </VerticalStackLayout>
+                                    <Entry x:Name="EmailEntry"
+                                           Placeholder="MSSV hoặc Email"
+                                           PlaceholderColor="#94A3B8"
+                                           Keyboard="Email"
+                                           VerticalOptions="Center"
+                                           FontSize="15"/>
+                                </Border>
+
+                                <!-- MẬT KHẨU + NÚT MẮT -->
+                                <Label Text="Mật khẩu" FontSize="12" FontAttributes="Bold"
+                                       TextColor="#475569" Margin="4,0,0,8"/>
+                                <Border Padding="12,0" HeightRequest="54" StrokeThickness="1"
+                                        Stroke="#E2E8F0" BackgroundColor="#F8FAFC" Margin="0,0,0,28">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="12"/>
+                                    </Border.StrokeShape>
+                                    <Grid ColumnDefinitions="*, Auto">
+                                        <Entry x:Name="PasswordEntry"
+                                               IsPassword="True"
+                                               Placeholder="••••••••"
+                                               PlaceholderColor="#94A3B8"
+                                               VerticalOptions="Center"
+                                               FontSize="15"/>
+                                        <Button x:Name="EyeButton"
+                                                Grid.Column="1"
+                                                Text="👁"
+                                                FontSize="18"
+                                                BackgroundColor="Transparent"
+                                                TextColor="#94A3B8"
+                                                WidthRequest="44"
+                                                HeightRequest="44"
+                                                Padding="0"
+                                                Clicked="OnTogglePasswordClicked"/>
                                     </Grid>
                                 </Border>
 
-                                <Border WidthRequest="68" HeightRequest="58"
-                                        StrokeThickness="0" BackgroundColor="White">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="8"/>
-                                    </Border.StrokeShape>
-                                    <Grid Padding="7">
-                                        <HorizontalStackLayout Spacing="3"
-                                                                VerticalOptions="End"
-                                                                Margin="0,0,0,4">
-                                            <BoxView WidthRequest="10" HeightRequest="26" BackgroundColor="#BFDBFE" CornerRadius="2"/>
-                                            <BoxView WidthRequest="12" HeightRequest="26" BackgroundColor="#4F8EF7" CornerRadius="2"/>
-                                            <BoxView WidthRequest="12" HeightRequest="20" BackgroundColor="#818CF8" CornerRadius="2"/>
-                                            <BoxView WidthRequest="12" HeightRequest="39" BackgroundColor="#38BDF8" CornerRadius="2"/>
-                                        </HorizontalStackLayout>
-                                        <BoxView HeightRequest="2" BackgroundColor="#E2E8F0"
-                                                 VerticalOptions="End" CornerRadius="1"/>
-                                    </Grid>
-                                </Border>
+                                <!-- NÚT ĐĂNG NHẬP -->
+                                <Button Text="ĐĂNG NHẬP" TextColor="White" FontSize="16"
+                                        FontAttributes="Bold" HeightRequest="56" CornerRadius="14"
+                                        Clicked="OnDangNhapClicked" Margin="0,0,0,20">
+                                    <Button.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                            <GradientStop Color="#4F8EF7" Offset="0"/>
+                                            <GradientStop Color="#818CF8" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Button.Background>
+                                </Button>
 
-                                <VerticalStackLayout Spacing="0" VerticalOptions="End">
-                                    <Border WidthRequest="10" HeightRequest="60" StrokeThickness="0">
-                                        <Border.Background>
-                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                <GradientStop Color="#38BDF8" Offset="0"/>
-                                                <GradientStop Color="#818CF8" Offset="1"/>
-                                            </LinearGradientBrush>
-                                        </Border.Background>
-                                        <Border.StrokeShape>
-                                            <RoundRectangle CornerRadius="5,5,2,2"/>
-                                        </Border.StrokeShape>
-                                    </Border>
-                                    <Polygon Points="0,0 10,0 5,8" Fill="#818CF8"/>
-                                </VerticalStackLayout>
+                                <!-- QUÊN MẬT KHẨU -->
+                                <Label Text="Quên mật khẩu?" FontSize="14" TextColor="#4F8EF7"
+                                       FontAttributes="Bold" HorizontalOptions="Center" Padding="10">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnForgotPasswordTapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
 
-                                <Border WidthRequest="40" HeightRequest="45"
-                                        StrokeThickness="0" BackgroundColor="#EDE9FE">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="3"/>
-                                    </Border.StrokeShape>
-                                    <Grid>
-                                        <BoxView WidthRequest="4" BackgroundColor="#818CF8"
-                                                 HorizontalOptions="Start"/>
-                                        <VerticalStackLayout Margin="8,6,4,0" Spacing="4">
-                                            <BoxView HeightRequest="4" BackgroundColor="#C4B5FD" CornerRadius="2"/>
-                                            <BoxView HeightRequest="5" BackgroundColor="#DDD6FE" CornerRadius="2" WidthRequest="12" HorizontalOptions="Start"/>
-                                            <BoxView HeightRequest="5" BackgroundColor="#C4B5FD" CornerRadius="2"/>
-                                        </VerticalStackLayout>
-                                    </Grid>
-                                </Border>
+                            </VerticalStackLayout>
+                        </Border>
 
-                            </HorizontalStackLayout>
-                        </VerticalStackLayout>
                     </Grid>
-
-                    <!-- PHẦN DƯỚI: Card trắng -->
-                    <Border Grid.Row="1" BackgroundColor="White"
-                            StrokeThickness="0" Padding="24,28,24,32">
-                        <Border.StrokeShape>
-                            <RoundRectangle CornerRadius="0"/>
-                        </Border.StrokeShape>
-
-                        <VerticalStackLayout Spacing="0">
-                            <Label Text="Đăng nhập" FontSize="22" FontAttributes="Bold"
-                                   TextColor="#1E1E2E" Margin="0,0,0,4"/>
-                            <Label Text="Nhập thông tin tài khoản của bạn"
-                                   FontSize="12" TextColor="#94A3B8" Margin="0,0,0,24"/>
-
-                            <Label Text="Email / Mã số" FontSize="11"
-                                   TextColor="#94A3B8" Margin="0,0,0,6"/>
-                            <Border Padding="14,0" HeightRequest="48"
-                                    StrokeThickness="0"
-                                    BackgroundColor="#F0F7FF" Margin="0,0,0,16">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12"/>
-                                </Border.StrokeShape>
-                                <Entry x:Name="EmailEntry"
-                                       Placeholder="example@dntu.edu.vn"
-                                       PlaceholderColor="#CBD5E1"
-                                       FontSize="13" TextColor="#334155"
-                                       Keyboard="Email" VerticalOptions="Center"/>
-                            </Border>
-
-                            <Label Text="Mật khẩu" FontSize="11"
-                                   TextColor="#94A3B8" Margin="0,0,0,6"/>
-                            <Border Padding="14,0" HeightRequest="48"
-                                    StrokeThickness="0"
-                                    BackgroundColor="#F8FAFC" Margin="0,0,0,24">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="12"/>
-                                </Border.StrokeShape>
-                                <Entry x:Name="PasswordEntry"
-                                       Placeholder="Nhập mật khẩu"
-                                       PlaceholderColor="#CBD5E1"
-                                       FontSize="13" TextColor="#334155"
-                                       IsPassword="True" VerticalOptions="Center"/>
-                            </Border>
-
-                            <Button Text="Đăng nhập"
-                                    TextColor="White"
-                                    FontSize="15" FontAttributes="Bold"
-                                    HeightRequest="50" CornerRadius="14"
-                                    Clicked="OnDangNhapClicked"
-                                    Margin="0,0,0,16">
-                                <Button.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                        <GradientStop Color="#4F8EF7" Offset="0"/>
-                                        <GradientStop Color="#818CF8" Offset="1"/>
-                                    </LinearGradientBrush>
-                                </Button.Background>
-                            </Button>
-
-                            <Label Text="Quên mật khẩu?" FontSize="13"
-                                   TextColor="#4F8EF7" HorizontalOptions="Center"/>
-
-                        </VerticalStackLayout>
-                    </Border>
-
-                </Grid>
-            </Border>
-
-        </VerticalStackLayout>
-    </ScrollView>
-
+                </Border>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

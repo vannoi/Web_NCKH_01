@@ -3,30 +3,31 @@
     x:Class="NCKH.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:NCKH"
     xmlns:views="clr-namespace:NCKH.Views"
     Shell.FlyoutBehavior="Disabled"
     Title="NCKH">
 
-    <ShellContent
-        Title="Login"
-        ContentTemplate="{DataTemplate views:LoginPage}"
-        Route="LoginPage"/>
+    <!-- Login -->
+    <ShellContent Title="Login"
+                  ContentTemplate="{DataTemplate views:LoginPage}"
+                  Route="LoginPage"/>
 
-    <ShellContent
-        Title="Hồ Sơ"
-        ContentTemplate="{DataTemplate views:HoSoListPage}"
-        Route="HoSoListPage"/>
+    <FlyoutItem Title="Dashboard" Route="DashboardPage">
+        <ShellContent ContentTemplate="{DataTemplate views:DashboardPage}" />
+    </FlyoutItem>
 
+    <FlyoutItem Title="Hồ Sơ" Route="HoSoListPage">
+        <ShellContent ContentTemplate="{DataTemplate views:HoSoListPage}" />
+    </FlyoutItem>
 
-    <ShellContent
-        Title="Đơn vị Quản lý Trực tiếp"
-        ContentTemplate="{DataTemplate views:DvqlttListPage}"
-        Route="DvqlttListPage" />
+    <!-- Kiểm tra quá trình -->
+    <ShellContent Title="Kiểm tra"
+                  ContentTemplate="{DataTemplate views:KiemTraQuaTrinhPage}"
+                  Route="KiemTraQuaTrinhPage"/>
 
-    <ShellContent
-        Title="Tạo hồ sơ"
-        ContentTemplate="{DataTemplate views:TaoHoSoPage}"
-        Route="TaoHoSoPage"/>
+    <!-- Thông báo -->
+    <ShellContent Title="Thông báo"
+                  ContentTemplate="{DataTemplate views:ThongBaoPage}"
+                  Route="ThongBaoPage"/>
 
 </Shell>
