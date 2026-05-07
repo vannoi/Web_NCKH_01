@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NCKH.Views.ThemDinhMucPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F4F7FC">
+
+    <Grid RowDefinitions="Auto,*,Auto">
+
+        <!-- Header -->
+        <Grid Grid.Row="0" HeightRequest="80" Padding="24,0">
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                    <GradientStop Color="#818CF8" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid ColumnDefinitions="Auto,*">
+                <Button Grid.Column="0" Text="← "
+                        Clicked="OnQuayLaiClicked"
+                        BackgroundColor="Transparent"
+                        TextColor="White" FontSize="14"/>
+                <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                    <Label Text="THÊM ĐỊNH MỨC MỚI"
+                           FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="Điền đầy đủ thông tin bên dưới"
+                           FontSize="12" TextColor="#CCE0FF"/>
+                </VerticalStackLayout>
+            </Grid>
+        </Grid>
+
+        <!-- Form -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Padding="24,20" Spacing="16">
+
+                <!-- Card 1: Thông tin cơ bản -->
+                <Border BackgroundColor="White" StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Padding="20,18" Spacing="16">
+
+                        <Label Text="Thông tin cơ bản"
+                               FontSize="13" FontAttributes="Bold"
+                               TextColor="#4F8EF7"/>
+
+                        <!-- Mã + Số giờ -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Grid.Column="0" Spacing="6">
+                                <Label Text="MÃ ĐỊNH MỨC" FontSize="11" FontAttributes="Bold"
+                                       TextColor="#94A3B8" CharacterSpacing="0.8"/>
+                                <Border BackgroundColor="#F8FAFF" Stroke="#E2E8F0" HeightRequest="46">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry x:Name="EntryMa" Placeholder="VD: BB_Q1"
+                                           PlaceholderColor="#CBD5E1" Margin="12,0" FontSize="14"
+                                           TextColor="#1E293B"/>
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                <Label Text="SỐ GIỜ CHUẨN" FontSize="11" FontAttributes="Bold"
+                                       TextColor="#94A3B8" CharacterSpacing="0.8"/>
+                                <Border BackgroundColor="#F8FAFF" Stroke="#E2E8F0" HeightRequest="46">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Entry x:Name="EntrySoGio" Placeholder="VD: 250"
+                                           Keyboard="Numeric" PlaceholderColor="#CBD5E1"
+                                           Margin="12,0" FontSize="14" TextColor="#1E293B"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <!-- Tên định mức -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="TÊN ĐỊNH MỨC" FontSize="11" FontAttributes="Bold"
+                                   TextColor="#94A3B8" CharacterSpacing="0.8"/>
+                            <Border BackgroundColor="#F8FAFF" Stroke="#E2E8F0" HeightRequest="46">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Entry x:Name="EntryTen"
+                                       Placeholder="VD: Bài báo quốc tế Scopus (Q1)"
+                                       PlaceholderColor="#CBD5E1" Margin="12,0" FontSize="14"
+                                       TextColor="#1E293B"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Card 2: Phân loại -->
+                <Border BackgroundColor="White" StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="20"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout Padding="20,18" Spacing="16">
+
+                        <Label Text="Phân loại &amp; Trạng thái"
+                               FontSize="13" FontAttributes="Bold"
+                               TextColor="#4F8EF7"/>
+
+                        <!-- Loại giờ -->
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="LOẠI GIỜ" FontSize="11" FontAttributes="Bold"
+                                   TextColor="#94A3B8" CharacterSpacing="0.8"/>
+                            <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                                <Border x:Name="BadgeNCKH" Grid.Column="0"
+                                        BackgroundColor="#EEF2FF" Stroke="#818CF8" Padding="0,10">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10"/>
+                                    </Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnLoaiNCKH"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="NCKH" FontSize="13" FontAttributes="Bold"
+                                           TextColor="#4338CA" HorizontalOptions="Center"/>
+                                </Border>
+                                <Border x:Name="BadgeGD" Grid.Column="1"
+                                        BackgroundColor="#F8FAFF" Stroke="#E2E8F0" Padding="0,10">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10"/>
+                                    </Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnLoaiGD"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="Giảng dạy" FontSize="13" FontAttributes="Bold"
+                                           TextColor="#64748B" HorizontalOptions="Center"/>
+                                </Border>
+                                <Border x:Name="BadgePV" Grid.Column="2"
+                                        BackgroundColor="#F8FAFF" Stroke="#E2E8F0" Padding="0,10">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10"/>
+                                    </Border.StrokeShape>
+                                    <Border.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="OnLoaiPV"/>
+                                    </Border.GestureRecognizers>
+                                    <Label Text="Phục vụ CĐ" FontSize="13" FontAttributes="Bold"
+                                           TextColor="#64748B" HorizontalOptions="Center"/>
+                                </Border>
+                            </Grid>
+                        </VerticalStackLayout>
+
+                        <!-- Trạng thái -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="TRẠNG THÁI" FontSize="11" FontAttributes="Bold"
+                                   TextColor="#94A3B8" CharacterSpacing="0.8"/>
+                            <Border BackgroundColor="#F8FAFF" Stroke="#E2E8F0" HeightRequest="46">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="8"/>
+                                </Border.StrokeShape>
+                                <Picker x:Name="PickerTrangThai" Margin="8,0"
+                                        FontSize="14" Title="Chọn trạng thái"
+                                        TextColor="#1E293B">
+                                    <Picker.Items>
+                                        <x:String>Đang áp dụng</x:String>
+                                        <x:String>Tạm dừng</x:String>
+                                        <x:String>Ngừng áp dụng</x:String>
+                                    </Picker.Items>
+                                </Picker>
+                            </Border>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Footer -->
+        <Grid Grid.Row="2" ColumnDefinitions="*,*" ColumnSpacing="12"
+              Padding="24,14" BackgroundColor="White">
+            <BoxView Grid.ColumnSpan="2" HeightRequest="1" BackgroundColor="#F1F5F9"
+                     VerticalOptions="Start" Margin="0,0,0,14"/>
+            <Button Grid.Column="0" Text="Hủy bỏ"
+                    Clicked="OnQuayLaiClicked"
+                    BackgroundColor="White" TextColor="#64748B"
+                    BorderColor="#E2E8F0" BorderWidth="1.5"
+                    CornerRadius="10" HeightRequest="48"/>
+            <Button Grid.Column="1" Text="💾  Lưu định mức"
+                    Clicked="OnLuuClicked"
+                    TextColor="White" FontAttributes="Bold"
+                    CornerRadius="10" HeightRequest="48">
+                <Button.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                        <GradientStop Color="#818CF8" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+        </Grid>
+
+    </Grid>
+</ContentPage>

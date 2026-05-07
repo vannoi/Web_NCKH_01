@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NCKH.ViewModels"
+             xmlns:models="clr-namespace:NCKH.Models"
+             xmlns:components="clr-namespace:NCKH.Components"
+             x:Class="NCKH.Views.HoSoListPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F4F7FC">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Phone=0, Desktop=240}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <components:SidebarView Grid.Column="0" 
+                                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                                ActivePage="HoSo" 
+                                ZIndex="999"/>
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,Auto,*" Margin="0">
+
+            <!-- HEADER -->
+            <Grid Grid.Row="0" HeightRequest="{OnIdiom Phone=65, Desktop=80}" 
+                  Padding="{OnIdiom Phone='60,0,15,0', Desktop='30,0'}">
+                <Grid.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                        <GradientStop Color="#818CF8" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Grid.Background>
+                <VerticalStackLayout VerticalOptions="Center">
+                    <Label Text="DANH SÁCH HỒ SƠ" FontSize="{OnIdiom Phone=18, Desktop=22}" FontAttributes="Bold" TextColor="White"/>
+                    <Label Text="Quản lý hồ sơ công bố khoa học" FontSize="12" TextColor="#E0F2FE"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- SEARCH + TẠO MỚI -->
+            <Grid Grid.Row="1" Margin="{OnIdiom Phone='15,15', Desktop='30,20'}" 
+                  ColumnDefinitions="*, Auto" 
+                  ColumnSpacing="10">
+                <Border Grid.Column="0" BackgroundColor="White" Stroke="#E2E8F0" HeightRequest="45">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="8"/>
+                    </Border.StrokeShape>
+                    <Entry x:Name="SearchEntry"
+                           Placeholder="🔍  Tìm kiếm hồ sơ..."
+                           Margin="10,0"
+                           VerticalOptions="Center"
+                           TextChanged="OnSearchTextChanged"/>
+                </Border>
+
+                <Button Grid.Column="1" 
+                        Text="{OnIdiom Phone='+', Desktop='+ Tạo hồ sơ mới'}"
+                        Clicked="OnTaoHoSoClicked"
+                        BackgroundColor="#4F8EF7" CornerRadius="8" TextColor="White"
+                        Padding="{OnIdiom Phone='15,0', Desktop='16,0'}" 
+                        FontAttributes="Bold"
+                        HeightRequest="45"/>
+            </Grid>
+
+            <!-- DANH SÁCH -->
+            <ScrollView Grid.Row="2" Margin="{OnIdiom Phone='15,0,15,15', Desktop='30,0,30,30'}">
+                <Border BackgroundColor="White" StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="12"/>
+                    </Border.StrokeShape>
+                    <VerticalStackLayout>
+
+                        <!-- HEADER TABLE (Desktop) -->
+                        <Grid ColumnDefinitions="120,*,350,300" Padding="20,15" BackgroundColor="#F8FAFF" IsVisible="{OnIdiom Phone=False, Desktop=True}">
+                            <Label Grid.Column="0" Text="STT" FontAttributes="Bold" TextColor="#334155"/>
+                            <Label Grid.Column="1" Text="TIÊU ĐỀ" FontAttributes="Bold" TextColor="#334155"/>
+                           
+                            <Label Grid.Column="2" Text="TRẠNG THÁI" FontAttributes="Bold" TextColor="#334155" HorizontalOptions="Center"/>
+                            <Label Grid.Column="3" Text="THAO TÁC" FontAttributes="Bold" TextColor="#334155" HorizontalOptions="Center"/>
+                        </Grid>
+                        <BoxView HeightRequest="1" BackgroundColor="#EDF2F7" IsVisible="{OnIdiom Phone=False, Desktop=True}"/>
+
+                        <!-- FIX: Bỏ ItemsSource binding, để code-behind set -->
+                        <CollectionView x:Name="HoSoCollectionView">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:HoSo">
+                                    <VerticalStackLayout>
+
+                                        <!-- DESKTOP ROW -->
+                                        <Grid ColumnDefinitions= "120,*,350,300" Padding="20,15" IsVisible="{OnIdiom Phone=False, Desktop=True}">
+                                            <Label Grid.Column="0" Text="{Binding STT}" VerticalOptions="Center" TextColor="#94A3B8"/>
+                                            <Label Grid.Column="1" Text="{Binding TieuDe}" FontAttributes="Bold" TextColor="#1E293B" VerticalOptions="Center" LineBreakMode="TailTruncation"/>
+                                            <Border Grid.Column="2" StrokeShape="RoundRectangle 12" Padding="12,4" BackgroundColor="{Binding TrangThaiBg}" StrokeThickness="0" HorizontalOptions="Center" VerticalOptions="Center">
+                                                <Label Text="{Binding TrangThai}" TextColor="{Binding TrangThaiColor}" FontSize="12" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+                                            <HorizontalStackLayout Grid.Column="4" Spacing="8" HorizontalOptions="Center">
+                                                <Button Text="Chi tiết" Clicked="OnChiTietClicked" CommandParameter="{Binding .}" BackgroundColor="#EEF2FF" TextColor="#4F8EF7" HeightRequest="30" FontSize="11" Padding="10,0" CornerRadius="6"/>
+                                                <Button Text="PDF" Clicked="OnMinhChungPdfTapped" CommandParameter="{Binding .}" BackgroundColor="#FFF1F2" TextColor="#E11D48" HeightRequest="30" FontSize="11" Padding="10,0" CornerRadius="6"/>
+                                                <Button Text="Sửa" Clicked="OnSuaClicked" CommandParameter="{Binding .}" BackgroundColor="#FFFBEB" TextColor="#D97706" HeightRequest="30" FontSize="11" Padding="10,0" CornerRadius="6"/>
+                                                <Button Text="Xóa" Clicked="OnXoaClicked" CommandParameter="{Binding .}" BackgroundColor="#FEF2F2" TextColor="#DC2626" HeightRequest="30" FontSize="11" Padding="10,0" CornerRadius="6"/>
+                                            </HorizontalStackLayout>
+                                        </Grid>
+
+                                        <!-- MOBILE ROW -->
+                                        <VerticalStackLayout Padding="15" Spacing="8" IsVisible="{OnIdiom Phone=True, Desktop=False}">
+                                            <HorizontalStackLayout Spacing="5">
+                                                <Label Text="{Binding STT, StringFormat='{0}.'}" TextColor="#4F8EF7" FontAttributes="Bold"/>
+                                                <Label Text="{Binding TieuDe}" FontAttributes="Bold" TextColor="#1E293B" LineBreakMode="WordWrap"/>
+                                            </HorizontalStackLayout>
+                                            <Label Text="{Binding BuocHienTai, StringFormat='Bước: {0}'}" FontSize="12" TextColor="#64748B"/>
+                                            <Border StrokeShape="RoundRectangle 8" Padding="10,3" BackgroundColor="{Binding TrangThaiBg}" StrokeThickness="0" HorizontalOptions="Start">
+                                                <Label Text="{Binding TrangThai}" TextColor="{Binding TrangThaiColor}" FontSize="11" FontAttributes="Bold"/>
+                                            </Border>
+                                            <FlexLayout Wrap="Wrap" JustifyContent="Start" AlignItems="Center" Margin="0,5,0,0">
+                                                <Button Text="Chi tiết" Clicked="OnChiTietClicked" CommandParameter="{Binding .}" Margin="0,0,5,5" BackgroundColor="#EEF2FF" TextColor="#4F8EF7" HeightRequest="35" FontSize="11" CornerRadius="6"/>
+                                                <Button Text="PDF" Clicked="OnMinhChungPdfTapped" CommandParameter="{Binding .}" Margin="0,0,5,5" BackgroundColor="#FFF1F2" TextColor="#E11D48" HeightRequest="35" FontSize="11" CornerRadius="6"/>
+                                                <Button Text="Sửa" Clicked="OnSuaClicked" CommandParameter="{Binding .}" Margin="0,0,5,5" BackgroundColor="#FFFBEB" TextColor="#D97706" HeightRequest="35" FontSize="11" CornerRadius="6"/>
+                                                <Button Text="Xóa" Clicked="OnXoaClicked" CommandParameter="{Binding .}" Margin="0,0,5,5" BackgroundColor="#FEF2F2" TextColor="#DC2626" HeightRequest="35" FontSize="11" CornerRadius="6"/>
+                                            </FlexLayout>
+                                        </VerticalStackLayout>
+
+                                        <BoxView HeightRequest="1" BackgroundColor="#F7FAFC" Margin="20,0"/>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+            </CollectionView.ItemTemplate>
+                        </CollectionView>
+
+                    </VerticalStackLayout>
+                </Border>
+            </ScrollView>
+        </Grid>
+
+        <!-- POPUP CHI TIẾT -->
+        <Grid x:Name="PopupOverlay" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="False" BackgroundColor="#80000000" ZIndex="1000">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnPopupOverlayTapped"/>
+            </Grid.GestureRecognizers>
+
+            <Border x:Name="PopupCard" WidthRequest="{OnIdiom Phone=340, Desktop=480}" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="White" StrokeThickness="0" Padding="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16"/>
+                </Border.StrokeShape>
+
+                <VerticalStackLayout Spacing="0">
+                    <Grid Padding="24,18" ColumnDefinitions="*,Auto">
+                        <Grid.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                                <GradientStop Color="#818CF8" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Grid.Background>
+                        <VerticalStackLayout Grid.Column="0" Spacing="3">
+                            <Label Text="Chi tiết hồ sơ" FontSize="16" FontAttributes="Bold" TextColor="White"/>
+                            <Label x:Name="PopupTieuDe" Text="" FontSize="12" TextColor="#BFE0FF" LineBreakMode="TailTruncation"/>
+                        </VerticalStackLayout>
+                        <Button Grid.Column="1" Text="✕" Clicked="OnDongPopupClicked" BackgroundColor="#40FFFFFF" TextColor="White" WidthRequest="34" HeightRequest="34" CornerRadius="17" FontSize="14" Padding="0"/>
+                    </Grid>
+
+                    <VerticalStackLayout Padding="24,20" Spacing="14">
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="TIÊU ĐỀ" FontSize="10" FontAttributes="Bold" TextColor="#94A3B8"/>
+                            <Border Padding="12,10" BackgroundColor="#F8FAFC" StrokeThickness="0.5" Stroke="#E2E8F0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                <Label x:Name="PopupTieuDeDetail" Text="" FontSize="14" FontAttributes="Bold" TextColor="#1E293B"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="{OnIdiom Phone='*', Desktop='*,*'}" 
+                              RowDefinitions="{OnIdiom Phone='Auto,Auto', Desktop='Auto'}" 
+                              ColumnSpacing="12" RowSpacing="{OnIdiom Phone=10, Desktop=0}">
+                            <VerticalStackLayout Grid.Row="0" Grid.Column="0" Spacing="4">
+                                <Label Text="NGÀY NỘP" FontSize="10" FontAttributes="Bold" TextColor="#94A3B8"/>
+                                <Border Padding="12,10" BackgroundColor="#F8FAFC" StrokeThickness="0.5" Stroke="#E2E8F0">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                    <Label x:Name="PopupNgayNop" Text="" FontSize="13" TextColor="#334155"/>
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Row="{OnIdiom Phone=1, Desktop=0}" Grid.Column="{OnIdiom Phone=0, Desktop=1}" Spacing="4">
+                                <Label Text="TRẠNG THÁI" FontSize="10" FontAttributes="Bold" TextColor="#94A3B8"/>
+                                <Border Padding="12,10" BackgroundColor="#F8FAFC" StrokeThickness="0.5" Stroke="#E2E8F0">
+                                    <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                    <Label x:Name="PopupTrangThai" Text="" FontSize="13" FontAttributes="Bold" TextColor="#4F8EF7"/>
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="BƯỚC HIỆN TẠI" FontSize="10" FontAttributes="Bold" TextColor="#94A3B8"/>
+                            <Border Padding="12,10" BackgroundColor="#F8FAFC" StrokeThickness="0.5" Stroke="#E2E8F0">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                <Label x:Name="PopupBuoc" Text="" FontSize="13" TextColor="#334155"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <VerticalStackLayout Spacing="4">
+                            <Label Text="MÔ TẢ / GHI CHÚ" FontSize="10" FontAttributes="Bold" TextColor="#94A3B8"/>
+                            <Border Padding="12,10" BackgroundColor="#F8FAFC" StrokeThickness="0.5" Stroke="#E2E8F0" MinimumHeightRequest="70">
+                                <Border.StrokeShape><RoundRectangle CornerRadius="8"/></Border.StrokeShape>
+                                <Label x:Name="PopupMoTa" Text="" FontSize="13" TextColor="#334155"/>
+                            </Border>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <HorizontalStackLayout Padding="24,14" Spacing="10" HorizontalOptions="End">
+                        <Button Text="Xem PDF" Clicked="OnPopupXemPdfClicked" BackgroundColor="#FFF1F2" TextColor="#E11D48" CornerRadius="8" Padding="16,8" FontSize="13"/>
+                        <Button Text="Đóng" Clicked="OnDongPopupClicked" BackgroundColor="#EEF2FF" TextColor="#4F8EF7" CornerRadius="8" Padding="16,8" FontSize="13"/>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+
+    </Grid>
+</ContentPage>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:NCKH.Components"
+             x:Class="NCKH.Views.TaoHoSoPage" 
+             BackgroundColor="#80000000"
+             Shell.NavBarIsVisible="False">
+
+    <Grid Padding="{OnIdiom Phone='15', Desktop='0'}">
+
+        <Border VerticalOptions="Center" 
+                HorizontalOptions="{OnIdiom Phone='Fill', Desktop='Center'}" 
+                WidthRequest="{OnIdiom Phone='-1', Desktop='500'}" 
+                BackgroundColor="White"
+                StrokeThickness="0">
+
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,10" Radius="30" Opacity="0.3"/>
+            </Border.Shadow>
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="{OnIdiom Phone='12', Desktop='16'}"/>
+            </Border.StrokeShape>
+
+            <VerticalStackLayout>
+
+                <!-- HEADER -->
+                <Border BackgroundColor="#6366F1" 
+                        Padding="20,12"
+                        StrokeThickness="0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="{OnIdiom Phone='12,12,0,0', Desktop='16,16,0,0'}"/>
+                    </Border.StrokeShape>
+                    <Grid ColumnDefinitions="*, Auto">
+                        <Label Text="TẠO HỒ SƠ MỚI" 
+                               TextColor="White" 
+                               FontAttributes="Bold" 
+                               FontSize="16"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="1"
+                                Text="✕"
+                                Clicked="OnBackClicked"
+                                BackgroundColor="#80FFFFFF"
+                                TextColor="White"
+                                WidthRequest="32"
+                                HeightRequest="32"
+                                CornerRadius="16"
+                                Padding="0"
+                                FontSize="14"/>
+                    </Grid>
+                </Border>
+
+                <ScrollView MaximumHeightRequest="600">
+                    <VerticalStackLayout Padding="{OnIdiom Phone='15,20', Desktop='25,20'}" Spacing="20">
+
+                        <!-- TIÊU ĐỀ -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="TIÊU ĐỀ HỒ SƠ" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E2E8F0" Padding="12,2">
+                                <Entry x:Name="TieuDeEntry" 
+                                       Placeholder="Nhập tiêu đề..." 
+                                       PlaceholderColor="#CBD5E1"
+                                       TextColor="#1E293B"
+                                       FontSize="14"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- MÔ TẢ -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="MÔ TẢ" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold"/>
+                            <Border StrokeShape="RoundRectangle 8" Stroke="#E2E8F0" Padding="12,5">
+                                <Editor x:Name="MoTaEditor" 
+                                        Placeholder="Nhập mô tả..." 
+                                        PlaceholderColor="#CBD5E1"
+                                        HeightRequest="100" 
+                                        AutoSize="Disabled"
+                                        FontSize="14"/>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- TẬP TIN -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="TẬP TIN MINH CHỨNG" TextColor="#94A3B8" FontSize="11" FontAttributes="Bold"/>
+                            <Border Stroke="#6366F1" StrokeDashArray="4,2" StrokeShape="RoundRectangle 8" 
+                                    Padding="15" BackgroundColor="#F8FAFF">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnUploadFileTapped"/>
+                                </Border.GestureRecognizers>
+                                <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
+                                    <Label Text="📁" FontSize="18"/>
+                                    <Label Text="Nhấn để chọn PDF" TextColor="#6366F1" FontAttributes="Bold" FontSize="14"/>
+                                </HorizontalStackLayout>
+                            </Border>
+
+                            <Border x:Name="SelectedFileLayout" IsVisible="False" Margin="0,5"
+                                    StrokeShape="RoundRectangle 8" BackgroundColor="#F1F5F9" Padding="12,8" StrokeThickness="0">
+                                <Grid ColumnDefinitions="Auto, *, Auto">
+                                    <Label Text="📄" FontSize="16" VerticalOptions="Center"/>
+                                    <Label x:Name="FileNameLabel" Grid.Column="1" 
+                                           TextColor="#334155" VerticalOptions="Center" Margin="10,0" FontSize="14"/>
+                                    <Button Grid.Column="2" Text="✕" TextColor="Red" BackgroundColor="Transparent"
+                                            Clicked="OnRemoveFileClicked" WidthRequest="35"/>
+                                </Grid>
+                            </Border>
+                        </VerticalStackLayout>
+
+                        <!-- 2 NÚT -->
+                        <!-- <Grid ColumnDefinitions="*" ColumnSpacing="15" Margin="0,10,0,10">
+                        <Button Text="Lưu nháp" 
+                                    Clicked="OnLuuNhapClicked"
+                                    BackgroundColor="#F1F5F9" 
+                                    TextColor="#64748B" 
+                                    HeightRequest="45"
+                                    CornerRadius="8"
+                                    FontSize="14"/>
+                            </Grid>-->
+                        <Button 
+                                    Text="Gửi hồ sơ" 
+                                    Clicked="OnNopHoSoClicked"
+                                    BackgroundColor="#6366F1" 
+                                    TextColor="White" 
+                                    HeightRequest="45"
+                                    WidthRequest="200"
+                                    HorizontalOptions="Center"
+                                    CornerRadius="8"
+                                    Margin="0,10,0,10"
+                                    FontSize="14"/>
+                    </VerticalStackLayout>
+                </ScrollView>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>

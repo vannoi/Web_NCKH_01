@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NCKH.Views.XoaHoSoPopup"
+             BackgroundColor="#80000000">
+
+    <Grid Padding="{OnIdiom Phone='15', Desktop='0'}">
+
+        <Border BackgroundColor="White" 
+                WidthRequest="{OnIdiom Phone='-1', Desktop='420'}" 
+                StrokeThickness="0"
+                HorizontalOptions="{OnIdiom Phone='Fill', Desktop='Center'}" 
+                VerticalOptions="Center">
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="{OnIdiom Phone='12', Desktop='16'}"/>
+            </Border.StrokeShape>
+
+            <VerticalStackLayout>
+
+                <Grid Padding="24,20" ColumnDefinitions="44,*" ColumnSpacing="12">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#E11D48" Offset="0.0"/>
+                            <GradientStop Color="#FB7185" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <Border Grid.Column="0" WidthRequest="44" HeightRequest="44"
+                            BackgroundColor="#33FFFFFF" VerticalOptions="Center" StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <Ellipse/>
+                        </Border.StrokeShape>
+                        <Label Text="⚠️" HorizontalOptions="Center" VerticalOptions="Center" FontSize="18"/>
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                        <Label Text="XÁC NHẬN XÓA" TextColor="White" FontAttributes="Bold" FontSize="16"/>
+                        <Label Text="Hành động này không thể hoàn tác" TextColor="#FFE4E6" FontSize="12"/>
+                    </VerticalStackLayout>
+                </Grid>
+
+                <VerticalStackLayout Padding="24" Spacing="16">
+                    <Label Text="Bạn có chắc chắn muốn xóa hồ sơ dưới đây khỏi hệ thống không?" 
+                           FontSize="14" TextColor="#334155"/>
+                </VerticalStackLayout>
+
+                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10" Padding="24,14,24,20">
+                    <BoxView Grid.ColumnSpan="3" HeightRequest="1" BackgroundColor="#F1F5F9" VerticalOptions="Start" Margin="0,0,0,14"/>
+
+                    <Button Grid.Column="1" Text="Hủy bỏ" Clicked="OnHuyXoaClicked"
+                            BackgroundColor="White" TextColor="#64748B"
+                            BorderColor="#E2E8F0" BorderWidth="1.5"
+                            CornerRadius="8" HeightRequest="40" Padding="20,0"/>
+
+                    <Button Grid.Column="2" Text="Xóa " Clicked="OnXacNhanXoaClicked"
+                            BackgroundColor="#E11D48" TextColor="White"
+                            FontAttributes="Bold" CornerRadius="8"
+                            HeightRequest="40" Padding="20,0"/>
+                </Grid>
+
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</ContentPage>
