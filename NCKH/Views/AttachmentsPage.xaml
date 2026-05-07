@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NCKH.Views.AttachmentsPage"
+             BackgroundColor="#80000000"
+             NavigationPage.HasNavigationBar="False">
+
+    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Border BackgroundColor="White" StrokeThickness="0"
+                VerticalOptions="Center" HorizontalOptions="Center">
+
+            <Border.WidthRequest>
+                <OnIdiom x:TypeArguments="x:Double" Phone="340" Tablet="500" Desktop="650"/>
+            </Border.WidthRequest>
+
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="16"/>
+            </Border.StrokeShape>
+
+            <Grid RowDefinitions="Auto,*,Auto">
+                <!-- Header -->
+                <Grid Grid.Row="0" Padding="24,20" ColumnDefinitions="Auto, *, Auto">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                            <GradientStop Color="#6D5DFD" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Grid.Background>
+
+                    <!-- Quay lại -->
+                    <Label Grid.Column="0" Text="←" FontSize="24" TextColor="White" VerticalOptions="Center" Margin="0,0,15,0">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnBackTapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                        <Label Text="Tệp đính kèm" FontSize="18" FontAttributes="Bold" TextColor="White"/>
+                        <Label x:Name="LabelTenHoSo" Text="Hồ sơ: Đang tải..." FontSize="12" TextColor="#E0E7FF"
+                               MaxLines="1" LineBreakMode="TailTruncation"/>
+                    </VerticalStackLayout>
+
+                    <!-- Nút Thêm File - Chỉ hiện ở PrivateMode -->
+                    <Border Grid.Column="2" WidthRequest="40" HeightRequest="40" 
+                            StrokeThickness="0" BackgroundColor="#33FFFFFF" VerticalOptions="Center"
+                            IsVisible="{Binding IsPrivateMode}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Label Text="+" FontSize="26" TextColor="White" 
+                               HorizontalOptions="Center" VerticalOptions="Center" TranslationY="-2"/>
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUploadFileTapped"/>
+                        </Border.GestureRecognizers>
+                    </Border>
+                </Grid>
+
+                <!-- Body -->
+                <ScrollView Grid.Row="1" HeightRequest="400" Padding="20">
+                    <CollectionView ItemsSource="{Binding Attachments}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Margin="0,0,0,10" Padding="12,10" BackgroundColor="#F8FAFC" StrokeThickness="0.5" Stroke="#E2E8F0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10"/>
+                                    </Border.StrokeShape>
+
+                                    <Grid ColumnDefinitions="Auto, *, Auto, Auto" ColumnSpacing="12">
+                                        <Label Grid.Column="0" Text="📄" FontSize="20" VerticalOptions="Center"/>
+
+                                        <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                                            <!-- Binding chữ thường theo Model -->
+                                            <Label Text="{Binding fileName}" FontSize="13" FontAttributes="Bold" TextColor="#1E293B" LineBreakMode="TailTruncation"/>
+                                            <Label Text="{Binding FileSize}" FontSize="11" TextColor="#94A3B8"/>
+                                        </VerticalStackLayout>
+
+                                        <!-- Tải xuống -->
+                                        <Button Grid.Column="2" Text="⬇" FontSize="14" WidthRequest="36" HeightRequest="36" 
+                                                CornerRadius="18" Padding="0" BackgroundColor="#E0E7FF" TextColor="#4F46E5"
+                                                Clicked="OnDownloadSingleTapped" CommandParameter="{Binding .}"/>
+
+                                        <!-- Xóa - Chỉ hiện ở PrivateMode -->
+                                        <Button Grid.Column="3" Text="✕" FontSize="14" WidthRequest="36" HeightRequest="36" 
+                                                CornerRadius="18" Padding="0" BackgroundColor="#FEE2E2" TextColor="#EF4444"
+                                                Clicked="OnDeleteFileTapped" CommandParameter="{Binding .}"
+                                                IsVisible="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.IsPrivateMode}"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </ScrollView>
+
+                <!-- Footer -->
+                <Grid Grid.Row="2" Padding="20" BackgroundColor="#F8FAFC">
+                    <Button Text="↓ Tải tất cả tài liệu" 
+                            HeightRequest="44" CornerRadius="22" 
+                            FontAttributes="Bold" TextColor="White" Clicked="OnDownloadAllTapped">
+                        <Button.Background>
+                            <LinearGradientBrush EndPoint="1,0">
+                                <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                                <GradientStop Color="#6D5DFD" Offset="1.0"/>
+                            </LinearGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>

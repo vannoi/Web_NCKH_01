@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:NCKH.Models"
+             x:Class="NCKH.Views.ReasonPopupPage"
+             BackgroundColor="#80000000">
+
+    <Frame VerticalOptions="Center" 
+           HorizontalOptions="Center" 
+           WidthRequest="{OnIdiom Desktop=550, Phone=340}"
+           Padding="0" 
+           CornerRadius="20" 
+           HasShadow="False"
+           BorderColor="Transparent">
+
+        <Grid RowDefinitions="Auto, *, Auto">
+            <Border Grid.Row="0" StrokeThickness="0" HeightRequest="80">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#6366F1" Offset="0.1" />
+                        <GradientStop Color="#A855F7" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Grid Padding="20" ColumnDefinitions="Auto, *">
+                    <Button Grid.Column="0" Text="←" FontSize="20" TextColor="White" 
+                            BackgroundColor="Transparent" Clicked="OnBackClicked"/>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Margin="10,0,0,0">
+                        <Label Text="Phản hồi &amp; Trả hồ sơ" FontAttributes="Bold" FontSize="18" TextColor="White"/>
+                        <Label x:Name="TenHoSoLabel" FontSize="12" TextColor="#E0E7FF"/>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <ScrollView Grid.Row="1" BackgroundColor="White">
+                <StackLayout Padding="25" Spacing="15">
+                    <Label Text="Nội dung phản hồi:" FontAttributes="Bold" TextColor="#475569"/>
+                    <Border Stroke="#F1F5F9" StrokeThickness="2" HeightRequest="120">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="12"/>
+                        </Border.StrokeShape>
+                        <Editor x:Name="ReasonEditor" 
+                                Placeholder="Nhập lý do cụ thể..."
+                                FontSize="14" 
+                                Margin="10"
+                                TextColor="#1E293B"
+                                HeightRequest="100"
+                                AutoSize="Disabled"/>
+                    </Border>
+
+                    <Grid ColumnDefinitions="*, Auto" Margin="0,10,0,0">
+                        <Label Grid.Column="0" Text="Tệp đính kèm (nếu có):" FontAttributes="Bold" TextColor="#475569" VerticalOptions="Center"/>
+                        <Button Grid.Column="1" Text="+ Thêm file" FontSize="12" HeightRequest="35" 
+                                Clicked="OnAddFileClicked" BackgroundColor="#EEF2FF" TextColor="#6366F1"/>
+                    </Grid>
+
+                    <CollectionView x:Name="FilesCollectionView" ItemsSource="{Binding SelectedFiles}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:FileAttachment">
+                                <Border Margin="0,2" Padding="10,5" StrokeThickness="1" Stroke="#F1F5F9">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8"/>
+                                    </Border.StrokeShape>
+                                    <Grid ColumnDefinitions="Auto, *, Auto">
+                                        <Label Grid.Column="0" Text="📄" VerticalOptions="Center" Margin="0,0,10,0"/>
+                                        <Label Grid.Column="1" Text="{Binding fileName}" VerticalOptions="Center" 
+                                               FontSize="13" TextColor="#1E293B" LineBreakMode="TailTruncation"/>
+                                        <Button Grid.Column="2" Text="✕" TextColor="Red" BackgroundColor="Transparent" 
+                                                Clicked="OnRemoveFileClicked" CommandParameter="{Binding .}" WidthRequest="30"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </StackLayout>
+            </ScrollView>
+
+            <Border Grid.Row="2" Padding="20" StrokeThickness="0" BackgroundColor="White">
+                <Button Text="Xác nhận trả hồ sơ" 
+                        Clicked="OnConfirmClicked"
+                        BackgroundColor="#6366F1" 
+                        TextColor="White" FontAttributes="Bold"
+                        HeightRequest="50" CornerRadius="25" />
+            </Border>
+        </Grid>
+    </Frame>
+</ContentPage>

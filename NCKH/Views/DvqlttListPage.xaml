@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:NCKH.Components"
+             xmlns:models="clr-namespace:NCKH.Models"
+             x:Class="NCKH.Views.DvqlttListPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F0F4FF">
+
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Phone=0, Desktop=280}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <components:SidebarView Grid.Column="0"
+                                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                                ZIndex="999"
+                                ActivePage="KiemTra"/>
+
+        <Grid Grid.Column="1" RowDefinitions="Auto, Auto, *" Margin="0">
+
+            <!-- Header Banner -->
+            <Border Grid.Row="0" StrokeThickness="0" Margin="{OnIdiom Phone='15,65,15,10', Desktop='20,20,20,10'}">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#4F8EF7" Offset="0.0"/>
+                        <GradientStop Color="#38BDF8" Offset="0.5"/>
+                        <GradientStop Color="#818CF8" Offset="1.0"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="15"/>
+                </Border.StrokeShape>
+                <Grid Padding="25,20" ColumnDefinitions="*, Auto">
+                    <VerticalStackLayout Grid.Column="0" Spacing="5" VerticalOptions="Center">
+                        <Label Text="KIỂM TRA SƠ BỘ" FontSize="22" FontAttributes="Bold" TextColor="White"/>
+                        <Label Text="Quản lý và phê duyệt hồ sơ đơn vị" FontSize="13" TextColor="#E0E7FF"/>
+                    </VerticalStackLayout>
+                    <Image Grid.Column="1" Source="shield_check.png" WidthRequest="50" HeightRequest="50" Opacity="0.8"/>
+                </Grid>
+            </Border>
+
+            <!-- Search Bar -->
+            <Grid Grid.Row="1" ColumnDefinitions="*, Auto" Margin="20,0,20,15" ColumnSpacing="12">
+                <Border Grid.Column="0" StrokeThickness="1" Stroke="#E2E8F0" BackgroundColor="White">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Grid ColumnDefinitions="Auto, *">
+                        <Label Grid.Column="0" Text="🔍" VerticalOptions="Center" Margin="15,0,5,0"/>
+                        <Entry x:Name="SearchEntry" Grid.Column="1" Placeholder="Tìm kiếm hồ sơ..."
+                               TextChanged="OnSearchTextChanged" FontSize="14" TextColor="#1E293B" HeightRequest="45"/>
+                    </Grid>
+                </Border>
+                <Button Grid.Column="1" Text="Tìm kiếm" Clicked="OnSearchClicked" BackgroundColor="#4F8EF7" CornerRadius="10" Padding="20,0"/>
+            </Grid>
+
+            <!-- Bảng dữ liệu -->
+            <Border Grid.Row="2" Margin="20,0,20,20" Stroke="#E2E8F0" StrokeThickness="1" BackgroundColor="White">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <Grid RowDefinitions="Auto, *">
+                    <!-- Header Bảng -->
+                    <Grid Grid.Row="0" ColumnDefinitions="1.5*, 2*, 200, 100, 130, 130, 130" Padding="20,15" BackgroundColor="#F8FAFC" IsVisible="{OnIdiom Phone=False, Desktop=True}">
+                        <Label Grid.Column="0" Text="TIÊU ĐỀ HỒ SƠ" FontSize="11" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center"/>
+                        <Label Grid.Column="1" Text="MÔ TẢ" FontSize="11" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center"/>
+                        <Label Grid.Column="2" Text="Giảng Viên" FontSize="11" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center"/>
+                        <Label Grid.Column="3" Text="MINH CHỨNG" FontSize="11" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center"/>
+                        <Label Grid.Column="4" Text="MINH CHỨNG RIÊNG" FontSize="11" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center"/>
+                        <Label Grid.Column="5" Text="TRẠNG THÁI" FontSize="11" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center"/>
+                        <Label Grid.Column="6" Text="THAO TÁC" FontSize="11" FontAttributes="Bold" TextColor="#64748B" HorizontalOptions="Center"/>
+                        <BoxView Grid.Row="0" HeightRequest="1" BackgroundColor="#E2E8F0" VerticalOptions="End" Grid.ColumnSpan="7"/>
+                    </Grid>
+
+                    <!-- Danh sách Item -->
+                    <CollectionView Grid.Row="1" ItemsSource="{Binding DanhSachHoSo}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:ApplicationModel">
+                                <Grid>
+                                    <OnIdiom x:TypeArguments="View">
+                                        <OnIdiom.Desktop>
+                                            <VerticalStackLayout>
+                                                <Grid ColumnDefinitions="1.2*, 2*, 200, 100, 130, 130, 130" Padding="20,18">
+                                                    <Label Grid.Column="0" Text="{Binding title}" FontAttributes="Bold" TextColor="#1E293B" VerticalOptions="Center" MaxLines="2"/>
+                                                    <Label Grid.Column="1" Text="{Binding description}" TextColor="#64748B" VerticalOptions="Center" MaxLines="3" Margin="10"/>
+                                                    <Label Grid.Column="2" Text="{Binding teacherName}" TextColor="#64748B" HorizontalOptions="Center" MaxLines="2"/>
+
+                                                    <!-- Nút xem minh chứng Giảng viên -->
+                                                    <Button Grid.Column="3" Text="📁" Clicked="OnViewPreAttachmentsClicked" 
+                                                            BackgroundColor="#F1F5F9" WidthRequest="35" HeightRequest="35" CornerRadius="10"/>
+
+                                                    <!-- Nút xem/thêm minh chứng Đơn vị -->
+                                                    <Button Grid.Column="4" Text="📁" Clicked="OnViewMyApplicationsClicked" 
+                                                            BackgroundColor="#EEF2FF" WidthRequest="35" HeightRequest="35" CornerRadius="10"/>
+
+                                                    <Label Grid.Column="5" Text="{Binding StatusDisplay}" TextColor="#4F8EF7" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" FontSize="12"/>
+
+                                                    <Border Grid.Column="6" BackgroundColor="#EEF2FF" HeightRequest="35" WidthRequest="120">
+                                                        <Border.StrokeShape>
+                                                            <RoundRectangle CornerRadius="8"/>
+                                                        </Border.StrokeShape>
+                                                        <Picker Title="Xử lý ▾" FontSize="11" TextColor="#4F8EF7" HorizontalTextAlignment="Center"
+                                                                ItemsSource="{Binding AvailableActions}" SelectedIndexChanged="OnActionChanged"
+                                                                VerticalOptions="Center" HorizontalOptions="Center" />
+                                                    </Border>
+                                                </Grid>
+                                                <BoxView HeightRequest="1" BackgroundColor="#F1F5F9" Margin="20,0"/>
+                                            </VerticalStackLayout>
+                                        </OnIdiom.Desktop>
+                                        
+                                        <!-- Giao diện Phone -->
+                                        <OnIdiom.Phone>
+                                            <VerticalStackLayout Padding="15" Spacing="10">
+                                                <Label Text="{Binding title}" FontAttributes="Bold" FontSize="15" TextColor="#1E293B"/>
+                                                <Label Text="{Binding teacherName}" FontAttributes="Bold" FontSize="15" TextColor="#1E293B"/>
+                                                <Grid ColumnDefinitions="*, *, Auto" ColumnSpacing="10">
+                                                    <Button Grid.Column="0" Text="📁 Giảng viên" Clicked="OnViewPreAttachmentsClicked" FontSize="10" HeightRequest="35" BackgroundColor="#F1F5F9" TextColor="#475569"/>
+                                                    <Button Grid.Column="1" Text="📁 Đơn vị" Clicked="OnViewMyApplicationsClicked" FontSize="10" HeightRequest="35" BackgroundColor="#EEF2FF" TextColor="#4F46E5"/>
+                                                    <Border Grid.Column="2" WidthRequest="90" HeightRequest="35" BackgroundColor="#F8FAFC">
+                                                        <Picker Title="Xử lý" FontSize="10" SelectedIndexChanged="OnActionChanged"/>
+                                                    </Border>
+                                                </Grid>
+                                                <BoxView HeightRequest="1" BackgroundColor="#F1F5F9"/>
+                                            </VerticalStackLayout>
+                                        </OnIdiom.Phone>
+                                    </OnIdiom>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</ContentPage>
