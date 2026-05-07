@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NCKH.Components.SidebarView"
+             x:Name="sidebarRoot">
+    <Grid>
+        <Button x:Name="HamburgerBtn"
+                Text="☰"
+                FontSize="22"
+                TextColor="#4F46E5"
+                BackgroundColor="Transparent"
+                HorizontalOptions="Start"
+                VerticalOptions="Start"
+                Margin="15,10,0,0"
+                WidthRequest="45"
+                HeightRequest="45"
+                ZIndex="10"
+                Clicked="OnToggleSidebar"
+                IsVisible="{Binding IsMobileMode}">
+            <Button.CornerRadius>8</Button.CornerRadius>
+        </Button>
+
+        <Grid x:Name="SidebarContent" 
+              RowDefinitions="Auto,*,Auto" 
+              WidthRequest="240" 
+              HorizontalOptions="Start"
+              ZIndex="20" 
+              IsVisible="{Binding IsSidebarVisible}">
+
+            <Grid.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                    <GradientStop Color="#4F46E5" Offset="0.0"/>
+                    <GradientStop Color="#5A67D8" Offset="1.0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
+
+            <Button x:Name="CloseSidebarBtn"
+                    Text="✕"
+                    TextColor="White"
+                    BackgroundColor="Transparent"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start"
+                    FontSize="18"
+                    Margin="5"
+                    ZIndex="11"
+                    Clicked="OnToggleSidebar"
+                    IsVisible="{Binding IsMobileMode}"/>
+
+            <VerticalStackLayout Grid.Row="0" Padding="20,40,20,10" Spacing="0">
+                <HorizontalStackLayout Spacing="14" Margin="0,0,0,24">
+                    <Border WidthRequest="46" HeightRequest="46" StrokeThickness="0" BackgroundColor="#818CF8">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="13"/>
+                        </Border.StrokeShape>
+                        <Label Text="N" TextColor="White" FontAttributes="Bold" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Border>
+                    <VerticalStackLayout VerticalOptions="Center">
+                        <Label Text="NCKH App" TextColor="White" FontAttributes="Bold" FontSize="16"/>
+                        <Label Text="DNTU · Quản trị viên" TextColor="#C7D2FE" FontSize="11"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+                <BoxView HeightRequest="0.5" BackgroundColor="#6366F1" Margin="0,0,0,20"/>
+            </VerticalStackLayout>
+
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Padding="20,0" Spacing="5">
+                    <Label Text="MENU CHÍNH" TextColor="#A5B4FC" FontSize="10" FontAttributes="Bold" Margin="4,0,0,12"/>
+
+                    <VerticalStackLayout>
+                        <Border StrokeThickness="0" Padding="14,11" BackgroundColor="Transparent">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnToggleLibraryMenu"/>
+                            </Border.GestureRecognizers>
+                            <HorizontalStackLayout Spacing="12">
+                                <Label Text="📚" FontSize="16" VerticalOptions="Center"/>
+                                <Label Text="Trung tâm thư viện" TextColor="#C7D2FE" FontSize="14" VerticalOptions="Center"/>
+                                <Label Text="{Binding ArrowIcon}" TextColor="#A5B4FC" FontSize="10" VerticalOptions="Center" Margin="5,0,0,0"/>
+                            </HorizontalStackLayout>
+                        </Border>
+
+                        <VerticalStackLayout IsVisible="{Binding IsLibraryMenuOpen}" Margin="30,0,0,10">
+                            <Label Text="• Hồ sơ chờ duyệt" Padding="10" TextColor="#C7D2FE" FontSize="13">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnHoSoChoDuyetTapped"/>
+                                </Label.GestureRecognizers>
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsChoDuyetActive}" Value="True">
+                                        <Setter Property="TextColor" Value="White" />
+                                        <Setter Property="FontAttributes" Value="Bold" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label Text="• Hồ sơ đã duyệt" Padding="10" TextColor="#A5B4FC" FontSize="13">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnHoSoDaDuyetTapped"/>
+                                </Label.GestureRecognizers>
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsDaDuyetActive}" Value="True">
+                                        <Setter Property="TextColor" Value="White" />
+                                        <Setter Property="FontAttributes" Value="Bold" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+
+                            <Label Text="• Hồ sơ đã trả về" Padding="10" TextColor="#A5B4FC" FontSize="13">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="OnHoSoDaTraVeTapped"/>
+                                </Label.GestureRecognizers>
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsDaTraVeActive}" Value="True">
+                                        <Setter Property="TextColor" Value="White" />
+                                        <Setter Property="FontAttributes" Value="Bold" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+
+                    <Border StrokeThickness="0" Padding="14,11" BackgroundColor="Transparent">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnThongBaoTapped"/>
+                        </Border.GestureRecognizers>
+                        <HorizontalStackLayout Spacing="12">
+                            <Label Text="🔔" FontSize="16" VerticalOptions="Center"/>
+                            <Label Text="Thông báo" TextColor="#C7D2FE" FontSize="14" VerticalOptions="Center"/>
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </ScrollView>
+
+            <Border Grid.Row="2" Margin="12,20" Padding="12" BackgroundColor="#3730A3" StrokeThickness="0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="12"/>
+                </Border.StrokeShape>
+                <HorizontalStackLayout Spacing="12" VerticalOptions="Center">
+                    <Border WidthRequest="40" HeightRequest="40" BackgroundColor="#818CF8" StrokeThickness="0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="20"/>
+                        </Border.StrokeShape>
+                        <Label Text="{Binding UserInitial}" TextColor="White" HorizontalOptions="Center" VerticalOptions="Center" FontSize="14" FontAttributes="Bold"/>
+                    </Border>
+
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                        <Label Text="Nguyễn Văn A" TextColor="White" FontAttributes="Bold" FontSize="13"/>
+                        <Label Text="Đăng xuất" TextColor="#A5B4FC" FontSize="12" FontAttributes="Bold" TextDecorations="Underline">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLogoutClicked"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Border>
+
+        </Grid>
+    </Grid>
+</ContentView>

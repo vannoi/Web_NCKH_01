@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:NCKH.Components"
+             xmlns:models="clr-namespace:NCKH.Models"
+             x:Class="NCKH.Views.TTTVXacNhanTaiLieuPage"
+             x:Name="page"
+             BackgroundColor="#F8FAFC" 
+             Shell.NavBarIsVisible="False">
+
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Phone=0, Desktop=240}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <components:SidebarView Grid.Column="0" 
+                                Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                                ZIndex="999"
+                                ActivePage="LibraryMenu" />
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,*">
+            <Border Grid.Row="0" BackgroundColor="White" StrokeThickness="0" 
+                    Padding="{OnIdiom Phone='15,60,15,15', Desktop='30,20'}">
+                <Border.Shadow>
+                    <Shadow Brush="Black" Offset="0,2" Radius="10" Opacity="0.05"/>
+                </Border.Shadow>
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="TRUNG TÂM THƯ VIỆN" TextColor="#6366F1" FontSize="12" FontAttributes="Bold" CharacterSpacing="1"/>
+                    <Label Text="Danh sách hồ sơ nộp lưu" TextColor="#1E293B" FontSize="{OnIdiom Phone=18, Desktop=24}" FontAttributes="Bold"/>
+                    <Label Text="{Binding PageTitle }" TextColor="#5A67D8" FontSize="14" FontAttributes="Bold"/>
+                </VerticalStackLayout>
+            </Border>
+
+            <Grid Grid.Row="1" Padding="{OnIdiom Phone=15, Desktop=30}" RowDefinitions="Auto,*">
+                <Grid Grid.Row="0" Margin="0,0,0,20">
+                    <Border BackgroundColor="White" Stroke="#E2E8F0" StrokeShape="RoundRectangle 8" Padding="15,2" 
+                            HorizontalOptions="Fill">
+                        <Grid ColumnDefinitions="Auto, *">
+                            <Label Grid.Column="0" Text="🔍" VerticalOptions="Center" TextColor="#94A3B8" Margin="0,0,10,0"/>
+                            <Entry Grid.Column="1" Placeholder="Tìm kiếm mã hồ sơ..." 
+                                   FontSize="14" TextColor="Black"
+                                   TextChanged="OnSearchTextChanged"/>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Border Grid.Row="1" BackgroundColor="White" Stroke="#E2E8F0" StrokeShape="RoundRectangle 12">
+                    <Grid RowDefinitions="Auto,*">
+                        <Grid Grid.Row="0" BackgroundColor="#F1F5F9" Padding="20,15" 
+                              ColumnDefinitions="60,150,*,130,130,160,80"
+                              IsVisible="{OnIdiom Phone=False, Desktop=True}">
+                            <Label Grid.Column="0" Text="STT" FontAttributes="Bold" TextColor="#475569" HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="1" Text="Mã hồ sơ gốc" FontAttributes="Bold" TextColor="#475569"/>
+                            <Label Grid.Column="2" Text="Tên giảng viên" FontAttributes="Bold" TextColor="#475569"/>
+                            <Label Grid.Column="3" Text="Tệp đính kèm" FontAttributes="Bold" TextColor="#475569" HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="4" Text="Thêm tệp" FontAttributes="Bold" TextColor="#475569" HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="5" Text="Trạng thái" FontAttributes="Bold" TextColor="#475569" HorizontalTextAlignment="Center"/>
+                            <Label Grid.Column="6" Text="Thao tác" FontAttributes="Bold" TextColor="#475569" HorizontalTextAlignment="Center"/>
+                        </Grid>
+
+                        <CollectionView Grid.Row="1" ItemsSource="{Binding DanhSachHoSo}" x:Name="ListHoSo">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate x:DataType="models:TTTVHoSoItem">
+                                    <Grid>
+                                        <OnIdiom x:TypeArguments="View">
+                                            <OnIdiom.Desktop>
+                                                <VerticalStackLayout>
+                                                    <Grid Padding="20,18" ColumnDefinitions="60,150,*,130,130,160,80">
+                                                        <Label Grid.Column="0" Text="{Binding STT}" VerticalOptions="Center" HorizontalTextAlignment="Center" TextColor="#64748B"/>
+                                                        <Label Grid.Column="1" Text="{Binding MaHoSoGoc}" FontAttributes="Bold" VerticalOptions="Center" TextColor="#4F46E5"/>
+                                                        <Label Grid.Column="2" Text="{Binding TenGiangVien}" VerticalOptions="Center" TextColor="#1E293B" FontAttributes="Bold"/>
+
+                                                        <HorizontalStackLayout Grid.Column="3" HorizontalOptions="Center" VerticalOptions="Center" Spacing="4">
+                                                            <HorizontalStackLayout.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnXemTepDinhKem"/>
+                                                            </HorizontalStackLayout.GestureRecognizers>
+                                                            <Label Text="📎" FontSize="14" VerticalOptions="Center"/>
+                                                            <Label Text="{Binding SoFileDatCoc}" FontAttributes="Bold" TextColor="#4F46E5" VerticalOptions="Center"/>
+                                                            <Label Text="file" TextColor="#94A3B8" FontSize="12" VerticalOptions="End" Margin="0,0,0,2"/>
+                                                        </HorizontalStackLayout>
+
+                                                        <HorizontalStackLayout Grid.Column="4" HorizontalOptions="Center" VerticalOptions="Center" Spacing="4">
+                                                            <HorizontalStackLayout.GestureRecognizers>
+                                                                <TapGestureRecognizer Tapped="OnUploadTep"/>
+                                                            </HorizontalStackLayout.GestureRecognizers>
+                                                            <Label Text="📤" FontSize="14" VerticalOptions="Center"/>
+                                                            <Label Text="{Binding SoFileMyAttachment}" FontAttributes="Bold" TextColor="#16A34A" VerticalOptions="Center"/>
+                                                            <Label Text="file" TextColor="#94A3B8" FontSize="12" VerticalOptions="End" Margin="0,0,0,2"/>
+                                                        </HorizontalStackLayout>
+
+                                                        <Border Grid.Column="5" Padding="10,5" HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="{Binding TrangThaiBgColor}" StrokeThickness="0">
+                                                            <Border.StrokeShape>
+                                                                <RoundRectangle CornerRadius="6"/>
+                                                            </Border.StrokeShape>
+                                                            <Label Text="{Binding TrangThaiText}" TextColor="{Binding TrangThaiColor}" FontSize="11" FontAttributes="Bold"/>
+                                                        </Border>
+
+                                                        <Border Grid.Column="6" BackgroundColor="#EEF2FF" HeightRequest="35">
+                                                            <Border.StrokeShape>
+                                                                <RoundRectangle CornerRadius="6"/>
+                                                            </Border.StrokeShape>
+                                                            <Picker FontSize="11" TextColor="#4F8EF7"
+                                                                    SelectedIndexChanged="OnActionChanged"
+                                                                    BindingContext="{Binding .}"
+                                                                    Title="{Binding PickerTitle}"
+                                                                    IsEnabled="{Binding IsCanProcess}">
+                                                                <Picker.ItemsSource>
+                                                                    <x:Array Type="{x:Type x:String}">
+                                                                        <x:String>Phê duyệt nhanh</x:String>
+                                                                        <x:String>Trả về giảng viên</x:String>
+                                                                    </x:Array>
+                                                                </Picker.ItemsSource>
+                                                            </Picker>
+                                                        </Border>
+                                                    </Grid>
+                                                    <BoxView HeightRequest="1" BackgroundColor="#F1F5F9" Margin="20,0"/>
+                                                </VerticalStackLayout>
+                                            </OnIdiom.Desktop>
+
+                                            <OnIdiom.Phone>
+                                                <Border Margin="10,5" Padding="15" StrokeThickness="1" Stroke="#E2E8F0">
+                                                    <Border.StrokeShape>
+                                                        <RoundRectangle CornerRadius="10"/>
+                                                    </Border.StrokeShape>
+                                                    <VerticalStackLayout Spacing="8">
+                                                        <Grid ColumnDefinitions="*, Auto">
+                                                            <Label Grid.Column="0" Text="{Binding MaHoSoGoc}" FontAttributes="Bold" TextColor="#4F46E5" FontSize="16"/>
+                                                            <Border Grid.Column="1" Padding="8,4" BackgroundColor="{Binding TrangThaiBgColor}" StrokeThickness="0">
+                                                                <Border.StrokeShape>
+                                                                    <RoundRectangle CornerRadius="4"/>
+                                                                </Border.StrokeShape>
+                                                                <Label Text="{Binding TrangThaiText}" TextColor="{Binding TrangThaiColor}" FontSize="10" FontAttributes="Bold"/>
+                                                            </Border>
+                                                        </Grid>
+
+                                                        <Label Text="{Binding TenGiangVien}" FontAttributes="Bold" TextColor="#1E293B"/>
+
+                                                        <HorizontalStackLayout Spacing="15">
+                                                            <HorizontalStackLayout Spacing="4">
+                                                                <Label Text="📎" FontSize="13"/>
+                                                                <Label Text="{Binding SoFileDatCoc}" FontAttributes="Bold" TextColor="#4F46E5" FontSize="13"/>
+                                                                <Label Text="tệp nộp" TextColor="#64748B" FontSize="12"/>
+                                                            </HorizontalStackLayout>
+                                                            <HorizontalStackLayout Spacing="4">
+                                                                <Label Text="📤" FontSize="13"/>
+                                                                <Label Text="{Binding SoFileMyAttachment}" FontAttributes="Bold" TextColor="#16A34A" FontSize="13"/>
+                                                                <Label Text="tệp thêm" TextColor="#64748B" FontSize="12"/>
+                                                            </HorizontalStackLayout>
+                                                        </HorizontalStackLayout>
+
+                                                        <BoxView HeightRequest="1" BackgroundColor="#F1F5F9"/>
+
+                                                        <VerticalStackLayout Spacing="8">
+                                                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8">
+                                                                <Button Grid.Column="0" Text="📎 Tài liệu"
+                                                                        Clicked="OnXemTepDinhKemMobile"
+                                                                        FontSize="12" HeightRequest="35"
+                                                                        BackgroundColor="#EEF2FF" TextColor="#4F46E5"
+                                                                        CornerRadius="6"/>
+                                                                <Button Grid.Column="1" Text="📤 Thêm tệp"
+                                                                        Clicked="OnUploadTepMobile"
+                                                                        IsEnabled="{Binding IsCanProcess}"
+                                                                        FontSize="12" HeightRequest="35"
+                                                                        BackgroundColor="#F0FDF4" TextColor="#16A34A"
+                                                                        CornerRadius="6"/>
+                                                            </Grid>
+
+                                                            <Border BackgroundColor="#EEF2FF" HeightRequest="38" StrokeThickness="0"
+                                                                    IsVisible="{Binding IsCanProcess}">
+                                                                <Border.StrokeShape>
+                                                                    <RoundRectangle CornerRadius="6"/>
+                                                                </Border.StrokeShape>
+                                                                <Picker FontSize="12" TextColor="#4F8EF7"
+                                                                        SelectedIndexChanged="OnActionChanged"
+                                                                        BindingContext="{Binding .}"
+                                                                        Title="Chọn thao tác">
+                                                                    <Picker.ItemsSource>
+                                                                        <x:Array Type="{x:Type x:String}">
+                                                                            <x:String>Phê duyệt nhanh</x:String>
+                                                                            <x:String>Trả về giảng viên</x:String>
+                                                                        </x:Array>
+                                                                    </Picker.ItemsSource>
+                                                                </Picker>
+                                                            </Border>
+                                                        </VerticalStackLayout>
+                                                    </VerticalStackLayout>
+                                                </Border>
+                                            </OnIdiom.Phone>
+                                        </OnIdiom>
+                                    </Grid>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Grid>
+                </Border>
+            </Grid>
+        </Grid>
+    </Grid>
+</ContentPage>

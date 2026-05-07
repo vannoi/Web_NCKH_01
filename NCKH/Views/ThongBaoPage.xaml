@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:components="clr-namespace:NCKH.Components"
+             xmlns:viewModels="clr-namespace:NCKH.ViewModels"
+             x:Class="NCKH.Views.ThongBaoPage"
+             x:Name="page"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="#F0F4F8">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="{OnIdiom Phone=0, Desktop=240}" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <components:SidebarView x:Name="SidebarControl"
+                        Grid.Column="0" 
+                        Grid.ColumnSpan="{OnIdiom Phone=2, Desktop=1}"
+                        WidthRequest="280"
+                        ZIndex="999"
+                        TranslationX="{OnIdiom Phone=-280, Desktop=0}" 
+                        IsVisible="{OnIdiom Phone=False, Desktop=True}"
+                        HorizontalOptions="Start" />
+
+        <Grid Grid.Column="1" RowDefinitions="Auto,*">
+
+            <Grid Grid.Row="0" Padding="{OnIdiom Phone='15,10', Desktop='30,20'}" ColumnDefinitions="Auto,*">
+                <ImageButton Grid.Column="0"
+                         Source="menu_icon.png"
+                         Clicked="OnMenuClicked"
+                         IsVisible="{OnIdiom Phone=True, Desktop=False}"
+                         WidthRequest="30" HeightRequest="30"
+                         VerticalOptions="Center"
+                         BackgroundColor="Transparent"
+                         Margin="0,0,10,0"/>
+
+                <VerticalStackLayout Grid.Column="1" Spacing="4" VerticalOptions="Center">
+                    <Label Text="Thông báo 🔔" FontSize="{OnIdiom Phone=20, Desktop=24}" FontAttributes="Bold" TextColor="#1E293B"/>
+                    <Label Text="Thông tin mới nhất từ hệ thống" FontSize="12" TextColor="#64748B"/>
+                </VerticalStackLayout>
+            </Grid>
+
+            <ScrollView Grid.Row="1">
+                <VerticalStackLayout Padding="{OnIdiom Phone=15, Desktop=30}" Spacing="24">
+
+                    <ScrollView Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+                        <HorizontalStackLayout Spacing="10" Padding="0,5">
+                            <Border Padding="16,8" BackgroundColor="{Binding TabAllBg}" StrokeThickness="{Binding TabAllStroke}" Stroke="#E2E8F0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterCommand}" CommandParameter="Tất cả"/>
+                                </Border.GestureRecognizers>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20"/>
+                                </Border.StrokeShape>
+                                <Label Text="Tất cả" TextColor="{Binding TabAllText}" FontSize="13" FontAttributes="Bold"/>
+                            </Border>
+
+                            <Border Padding="16,8" BackgroundColor="{Binding TabUnreadBg}" StrokeThickness="{Binding TabUnreadStroke}" Stroke="#E2E8F0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterCommand}" CommandParameter="Chưa đọc"/>
+                                </Border.GestureRecognizers>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20"/>
+                                </Border.StrokeShape>
+                                <Label Text="Chưa đọc" TextColor="{Binding TabUnreadText}" FontSize="13"/>
+                            </Border>
+
+                            <Border Padding="16,8" BackgroundColor="{Binding TabHoSoBg}" StrokeThickness="{Binding TabHoSoStroke}" Stroke="#E2E8F0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterCommand}" CommandParameter="Hồ sơ"/>
+                                </Border.GestureRecognizers>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20"/>
+                                </Border.StrokeShape>
+                                <Label Text="Hồ sơ" TextColor="{Binding TabHoSoText}" FontSize="13"/>
+                            </Border>
+
+                            <Border Padding="16,8" BackgroundColor="{Binding TabHeThongBg}" StrokeThickness="{Binding TabHeThongStroke}" Stroke="#E2E8F0">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding FilterCommand}" CommandParameter="Hệ thống"/>
+                                </Border.GestureRecognizers>
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="20"/>
+                                </Border.StrokeShape>
+                                <Label Text="Hệ thống" TextColor="{Binding TabHeThongText}" FontSize="13"/>
+                            </Border>
+                        </HorizontalStackLayout>
+                    </ScrollView>
+
+                    <Border Padding="{OnIdiom Phone=4, Desktop=8}" BackgroundColor="White" StrokeThickness="0.5" Stroke="#E2E8F0">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="16"/>
+                        </Border.StrokeShape>
+
+                        <CollectionView ItemsSource="{Binding DisplayNotifications}" SelectionMode="None">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <VerticalStackLayout Opacity="{Binding RowOpacity}">
+                                        <VerticalStackLayout.GestureRecognizers>
+                                            <TapGestureRecognizer 
+                                            Command="{Binding Source={x:Reference page}, Path=BindingContext.ItemTappedCommand}"
+                                            CommandParameter="{Binding .}" />
+                                        </VerticalStackLayout.GestureRecognizers>
+
+                                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="{OnIdiom Phone=12, Desktop=16}" ColumnSpacing="{OnIdiom Phone=10, Desktop=14}">
+                                            <Border Grid.Column="0" WidthRequest="40" HeightRequest="40" 
+                                                BackgroundColor="{Binding IconBgColor}" StrokeThickness="0">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="10"/>
+                                                </Border.StrokeShape>
+                                                <Label Text="{Binding Icon}" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            </Border>
+
+                                            <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="2">
+                                                <HorizontalStackLayout Spacing="6">
+                                                    <Label Text="{Binding Title}" FontSize="13" FontAttributes="Bold" 
+                                                       TextColor="{Binding TitleColor}" LineBreakMode="TailTruncation"/>
+                                                    <Border IsVisible="{Binding ShowDotIfRead}" WidthRequest="6" HeightRequest="6" 
+                                                        BackgroundColor="#5A67D8" StrokeThickness="0" VerticalOptions="Center">
+                                                        <Border.StrokeShape>
+                                                            <RoundRectangle CornerRadius="3"/>
+                                                        </Border.StrokeShape>
+                                                    </Border>
+                                                </HorizontalStackLayout>
+                                                <Label Text="{Binding Description}" FontSize="12" 
+                                                   TextColor="{Binding DescColor}" MaxLines="2" LineBreakMode="WordWrap"/>
+                                            </VerticalStackLayout>
+
+                                            <Label Grid.Column="2" Text="{Binding Time}" FontSize="10" 
+                                               TextColor="#94A3B8" VerticalOptions="Start"/>
+                                        </Grid>
+                                        <BoxView HeightRequest="0.5" BackgroundColor="#F1F5F9" Margin="16,0"/>
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </Border>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+    </Grid>
+</ContentPage>

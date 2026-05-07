@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NCKH.Views.TTTVTraHoSoPopup"
+             BackgroundColor="Transparent"
+             Shell.NavBarIsVisible="False">
+
+    <!-- ══════════════════════════════════════════════════
+         RETURN APPLICATION FORM
+         Cấu trúc: Overlay đen mờ + Card trắng chính giữa
+         Giống hệt pattern SuaHoSoPopup / XoaDinhMucPopup
+    ══════════════════════════════════════════════════ -->
+    <Grid>
+
+        <!-- Overlay đen mờ - bấm vào để đóng popup -->
+        <BoxView BackgroundColor="#000000"
+                 Opacity="0.45">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnOverlayTapped"/>
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+        <!-- ── CARD POPUP ── -->
+        <Border BackgroundColor="White"
+                Stroke="#E2E8F0"
+                StrokeThickness="1"
+                StrokeShape="RoundRectangle 16"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"
+                Padding="28,24"
+                WidthRequest="420">
+            <Border.Shadow>
+                <Shadow Brush="#0000003A" Offset="0,8" Radius="32" Opacity="0.18"/>
+            </Border.Shadow>
+
+            <VerticalStackLayout Spacing="20">
+
+                <!-- ── Tiêu đề ── -->
+                <Label Text="Trả Hồ sơ"
+                       FontSize="20"
+                       FontAttributes="Bold"
+                       TextColor="#1E293B"/>
+
+                <!-- ── Thông tin hồ sơ ── -->
+                <Border BackgroundColor="#F8FAFC"
+                        Stroke="#E2E8F0"
+                        StrokeThickness="1"
+                        StrokeShape="RoundRectangle 10"
+                        Padding="16,12">
+                    <VerticalStackLayout Spacing="4">
+                        <Label x:Name="LabelMaHoSo"
+                               FontSize="14"
+                               FontAttributes="Bold"
+                               TextColor="#2563EB"/>
+                        <Label x:Name="LabelTenGiangVien"
+                               FontSize="13"
+                               TextColor="#64748B"/>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- ── Region (Lý do / Ghi chú) ── -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Lý do trả hồ sơ"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#374151"/>
+                    <Border Stroke="#E2E8F0"
+                            StrokeThickness="1.5"
+                            StrokeShape="RoundRectangle 10"
+                            BackgroundColor="White"
+                            Padding="4">
+                        <Editor x:Name="LyDoEditor"
+                                Placeholder="Nhập lý do trả hồ sơ..."
+                                PlaceholderColor="#94A3B8"
+                                FontSize="14"
+                                TextColor="#1E293B"
+                                HeightRequest="80"
+                                AutoSize="TextChanges"/>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ── Files đính kèm (nếu cần) ── -->
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="Tệp đính kèm (tuỳ chọn)"
+                           FontSize="13"
+                           FontAttributes="Bold"
+                           TextColor="#374151"/>
+
+                    <!-- Grid 2 cột, giống wireframe -->
+                    <Grid ColumnDefinitions="*,*"
+                          RowDefinitions="Auto,Auto"
+                          ColumnSpacing="10"
+                          RowSpacing="10">
+
+                        <!-- PDF slot 1 -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                BackgroundColor="#FEE2E2"
+                                Stroke="#FECACA"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 10"
+                                HeightRequest="60"
+                                Padding="8">
+                            <Label Text="📄 PDF"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="#DC2626"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- PDF slot 2 -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                BackgroundColor="#FEE2E2"
+                                Stroke="#FECACA"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 10"
+                                HeightRequest="60"
+                                Padding="8">
+                            <Label Text="📄 PDF"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="#DC2626"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- PDF slot 3 -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                BackgroundColor="#FEE2E2"
+                                Stroke="#FECACA"
+                                StrokeThickness="1"
+                                StrokeShape="RoundRectangle 10"
+                                HeightRequest="60"
+                                Padding="8">
+                            <Label Text="📄 PDF"
+                                   FontSize="13"
+                                   FontAttributes="Bold"
+                                   TextColor="#DC2626"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+                        </Border>
+
+                        <!-- Upload File Button (ô cuối cùng) -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                Stroke="#E2E8F0"
+                                StrokeThickness="1.5"
+                                StrokeShape="RoundRectangle 10"
+                                BackgroundColor="White"
+                                HeightRequest="60"
+                                Padding="0">
+                            <Button Text="📎 Tải lên tệp"
+                                    BackgroundColor="Transparent"
+                                    TextColor="#64748B"
+                                    FontSize="12"
+                                    CornerRadius="10"/>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- ── Nút Submit ── -->
+                <Button Text="Xác nhận"
+                        BackgroundColor="#16A34A"
+                        TextColor="White"
+                        FontSize="15"
+                        FontAttributes="Bold"
+                        CornerRadius="10"
+                        HeightRequest="48"
+                        Margin="0,4,0,0"
+                        Clicked="OnSubmitClicked"/>
+
+                <!-- ── Nút Hủy ── -->
+                <Button Text="Hủy"
+                        BackgroundColor="Transparent"
+                        TextColor="#94A3B8"
+                        FontSize="13"
+                        CornerRadius="10"
+                        HeightRequest="40"
+                        Margin="0,-8,0,0"
+                        Clicked="OnCancelClicked"/>
+
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+</ContentPage>
