@@ -1,0 +1,42 @@
+## Ignore Visual Studio temporary files, build outputs, and settings
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Re]leases/
+x64/
+x86/
+SDK/
+ARM/
+ARM64/
+bld/
+[Bb]in/
+[Oo]bj/
+[Log]/
+
+# Visual Studio 2015/2017/2019/2022 cache directory
+.vs/
+
+# Mono Auto Generated Files
+*.pidb
+*.resources
+*.nonportable
+
+# Tool Output
+_ReSharper*/
+*.ForceDelete
+*.apk
+*.aab
+*.ipa
+
+# OS-specific files
+.DS_Store
+Thumbs.db
